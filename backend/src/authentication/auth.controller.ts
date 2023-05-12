@@ -8,6 +8,7 @@ import {
 import { AuthService } from './auth.service';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
 import { LocalAuthGuard } from './guards/local-auth.guard';
+import { AdminGuard } from './guards/admin.guard';
 /* import { SuperAdminGuard } from './super-admin.guard'; */
 
 @Controller()
@@ -27,6 +28,7 @@ export class AuthController {
     return this.authService.signup(req.body);
   }
 
+  @UseGuards(JwtAuthGuard, AdminGuard)
   @Post('auth/signup-tenant')
   async signup_tenant(@Request2() req) {
     console.log('body', req.body);
