@@ -1,13 +1,12 @@
 import axios from "axios";
 import { Platform } from "react-native";
 import { UsersEntity } from "./usersEntity";
+import { BASE_URL } from "@env";
 
 export class UsersAPI {
-  static baseUrl: string = "https://b517-5-179-80-205.eu.ngrok.io";
-
   static async signup(user: UsersEntity) {
     try {
-      const result = await axios.post(this.baseUrl + "auth/signup", user);
+      const result = await axios.post(BASE_URL + "/auth/signup", user);
       console.log("back from server", result.data);
 
       return result.data;
@@ -16,10 +15,7 @@ export class UsersAPI {
 
   static async login(user: UsersEntity) {
     // try {
-    const result = await axios.post(
-      "https://b517-5-179-80-205.eu.ngrok.io/auth/login",
-      user
-    );
+    const result = await axios.post(BASE_URL + "/auth/login", user);
 
     return result.data;
     // }

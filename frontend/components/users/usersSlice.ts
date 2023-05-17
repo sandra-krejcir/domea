@@ -9,10 +9,9 @@ export const login = createAsyncThunk(
   async (user: UsersEntity, thunkAPI) => {
     const response = await UsersAPI.login(user);
 
-    console.log(response.access_token);
-
     // save to secure store
     SecureStore.setItemAsync("token", response.access_token);
+    SecureStore.setItemAsync("role", response.role);
 
     return response;
   }
@@ -28,12 +27,14 @@ export const signup = createAsyncThunk(
 
 interface UsersState {
   token: string | undefined | null;
+  role: string | undefined | null;
   error: string | undefined;
 }
 
 const initialState = {
   token: undefined,
   error: undefined,
+  role: undefined,
 } as UsersState;
 
 // Then, handle actions in your reducers:
@@ -43,6 +44,11 @@ const usersSlice = createSlice({
   reducers: {
     updateToken: (state, action: PayloadAction<string | null>) => {
       state.token = action.payload;
+      console.log("updated token");
+    },
+    updateRole: (state, action: PayloadAction<string | null>) => {
+      state.role = action.payload;
+      console.log("updated role");
     },
     // standard reducer logic, with auto-generated action types per reducer
   },
@@ -59,11 +65,13 @@ const usersSlice = createSlice({
       console.log("running login fulfilled");
       state.error = undefined;
       state.token = action.payload?.access_token;
+      state.role = action.payload?.role;
     });
     builder.addCase(login.rejected, (state, action) => {
       if (action.error.message === "Request failed with status code 401") {
         state.error = "Invalid login";
         state.token = undefined;
+        state.role = undefined;
       }
 
       console.log("error in slice", action.error);
@@ -72,7 +80,7 @@ const usersSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { updateToken } = usersSlice.actions;
+export const { updateToken, updateRole } = usersSlice.actions;
 
 export default usersSlice.reducer;
 

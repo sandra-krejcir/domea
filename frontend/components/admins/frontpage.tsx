@@ -2,19 +2,16 @@ import React, { useEffect, useState } from "react";
 import { AppDispatch, RootState } from "../../store";
 import { useSelector, useDispatch } from "react-redux";
 import { View, Text, TextInput, StyleSheet, Button } from "react-native";
-import { login, signup, updateRole, updateToken } from "./usersSlice";
-import { UsersEntity } from "./usersEntity";
+import { login, signup, updateToken } from "../users/usersSlice";
+import { UsersEntity } from "../users/usersEntity";
 import * as SecureStore from "expo-secure-store";
 
-export function Login({ navigation }) {
+export function FrontpageAdmin() {
   const token: string | null | undefined = useSelector(
     (state: RootState) => state.users.token
   );
   const error: string | undefined = useSelector(
     (state: RootState) => state.users.error
-  );
-  const role: string | null | undefined = useSelector(
-    (state: RootState) => state.users.token
   );
   const dispatch = useDispatch<AppDispatch>();
 
@@ -30,18 +27,12 @@ export function Login({ navigation }) {
   useEffect(() => {
     const asyncFunc = async () => {
       const token = await SecureStore.getItemAsync("token");
-      const role = await SecureStore.getItemAsync("role");
+      dispatch(updateToken(token));
 
-      console.log("login");
-      if (role === "admin") {
-        console.log("1", role);
-        navigation.navigate("FrontpageAdmin");
-      } else if (role === "user") {
-        navigation.navigate("FrontpageTenant");
-      } else console.log(role);
+      console.log("token is", token);
     };
     asyncFunc();
-  }, [token, role]);
+  }, []);
 
   return (
     <View>
@@ -56,7 +47,7 @@ export function Login({ navigation }) {
         onChangeText={setPassword}
         value={password}
       />
-      <Button title="Create success" onPress={handleLoginSuccess} />
+      <Button title="Create admin" onPress={handleLoginSuccess} />
 
       <Text>token is {token}</Text>
       <Text>{error}</Text>
