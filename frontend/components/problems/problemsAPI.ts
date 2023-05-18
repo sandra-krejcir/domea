@@ -1,26 +1,28 @@
 import axios from "axios";
 import { Platform } from "react-native";
 import { ProblemEntity } from "./problemsEntity";
+import { BASE_URL } from "@env";
+import * as SecureStore from "expo-secure-store";
 
 export class ProblemsAPI {
   static async create(problem: ProblemEntity) {
     console.log("sending data");
     try {
       console.log("sending data", problem);
-
-      const result = await axios.post(
-        "https://924e-5-179-80-205.eu.ngrok.io/problems",
-        { data: problem, headers: { "Content-Type": "multipart/form-data" } }
-      );
+      const token = await SecureStore.getItemAsync("token");
+      const headers = {
+        Authorization: `Bearer ${token}`,
+      };
+      const result = await axios.post(BASE_URL + "/problems", problem, {
+        headers,
+      });
       return result.data;
     } catch (error) {}
   }
 
   static async fetchAllProblems() {
     try {
-      const result = await axios.get(
-        "https://924e-5-179-80-205.eu.ngrok.io/problems"
-      );
+      const result = await axios.get(BASE_URL + "/problems");
       console.log(result);
 
       return result.data;

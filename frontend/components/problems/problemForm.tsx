@@ -9,7 +9,7 @@ import * as ImagePicker from "expo-image-picker";
 import { CameraRoll } from "@react-native-camera-roll/camera-roll";
 import { MediaType } from "expo-media-library";
 
-export function Problems() {
+export function ProblemsForm() {
   const problems: ProblemEntity[] = useSelector(
     (state: RootState) => state.problems.problems
   );

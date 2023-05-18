@@ -23,28 +23,28 @@ export class ProblemsController {
     private readonly problemsService: ProblemsService,
     private readonly usersService: UsersService,
   ) {}
-  /* 
-    @UseGuards(JwtAuthGuard, TenantGuard) */
+
+  @UseGuards(JwtAuthGuard, TenantGuard)
   @Post()
   async create(@Req() req, @Body() body) {
     console.log('body', body);
 
     const createProblemDto = new CreateProblemDto(
-      body.data.subject,
-      body.data.description,
-      body.data.photoDisplayURL,
+      body.subject,
+      body.description,
+      body.photoDisplayURL,
     );
 
     createProblemDto.tenant = (
-      await this.usersService.findOne('sakrj.krejcir@gmail.com')
+      await this.usersService.findOne(req.user.username)
     ).tenant; // Hardcode TEST TEST TEST
 
     console.log(createProblemDto);
     return this.problemsService.create(createProblemDto);
   }
 
+  @UseGuards(JwtAuthGuard, AdminGuard)
   @Get()
-  /*   @UseGuards(JwtAuthGuard, AdminGuard) */
   findAll(@Request() req: any) {
     console.log('user in controller', req.user);
 

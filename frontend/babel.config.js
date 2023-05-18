@@ -9,6 +9,12 @@ module.exports = function (api) {
           moduleName: "@env",
         },
       ],
+      [
+        "react-native-reanimated/plugin",
+        {
+          relativeSourceLocation: true,
+        },
+      ],
     ],
   };
 };
