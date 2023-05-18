@@ -53,8 +53,23 @@ export function ProblemsForm() {
             onChangeText={setDescription}
             value={description}
           />
-
-          <Button title="Open camera" onPress={() => setCamera(true)} />
+          {photoDisplayURL && (
+            <Image
+              style={{ width: 200, height: 400, alignSelf: "center" }}
+              source={{ uri: `${photoDisplayURL}` }}
+            />
+          )}
+          {photoDisplayURL ? (
+            <>
+              <Button
+                title="Delete Image"
+                onPress={() => setPhotoDisplayURL("")}
+              />
+              <Button title="Retake Picture" onPress={() => setCamera(true)} />
+            </>
+          ) : (
+            <Button title="Take Picture" onPress={() => setCamera(true)} />
+          )}
           <Button title="Create problem" onPress={handleSubmit} />
         </>
       )}
