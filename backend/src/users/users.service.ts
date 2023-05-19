@@ -27,9 +27,19 @@ export class UsersService {
   async findOne(username: string): Promise<UserEntity> {
     const result = await this.userRepository.findOne({
       where: { username: username },
-      relations: { tenant: true },
+      relations: ['tenant', 'tenant.problem'],
     });
     console.log('findOne user service', result);
+
+    return result;
+  }
+
+  async findAdmins(): Promise<UserEntity[]> {
+    const result = await this.userRepository.find({
+      where: { role: Role.Admin },
+      relations: ['boardMember'],
+    });
+    console.log('found many admins', result);
 
     return result;
   }

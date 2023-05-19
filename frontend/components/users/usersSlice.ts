@@ -25,13 +25,37 @@ export const signup = createAsyncThunk(
   }
 );
 
+export const findOne = createAsyncThunk(
+  "getUser", // This is a name for the thunk (must be unique) not the endpoint
+  async (thunkAPI) => {
+    const response = await UsersAPI.findOne();
+
+    console.log("the user", response);
+    return response;
+  }
+);
+
+export const findAdmins = createAsyncThunk(
+  "admins", // This is a name for the thunk (must be unique) not the endpoint
+  async (thunkAPI) => {
+    const response = await UsersAPI.findAdmins();
+
+    console.log("the admins", response);
+    return response;
+  }
+);
+
 interface UsersState {
+  user: any | undefined;
+  admins: any | undefined;
   token: string | undefined | null;
   role: string | undefined | null;
   error: string | undefined;
 }
 
 const initialState = {
+  user: undefined,
+  admins: undefined,
   token: undefined,
   error: undefined,
   role: undefined,
@@ -75,6 +99,32 @@ const usersSlice = createSlice({
       }
 
       console.log("error in slice", action.error);
+    });
+    builder.addCase(findOne.fulfilled, (state, action) => {
+      console.log("success", action.payload);
+      state.error = undefined;
+      state.user = action.payload;
+    });
+    builder.addCase(findOne.rejected, (state, action) => {
+      if (action.error.message === "Request failed with status code 401") {
+        state.error = "Invalid user";
+        state.user = undefined;
+      }
+
+      console.log("error in user slice", action.error);
+    });
+    builder.addCase(findAdmins.fulfilled, (state, action) => {
+      console.log("success", action.payload);
+      state.error = undefined;
+      state.admins = action.payload;
+    });
+    builder.addCase(findAdmins.rejected, (state, action) => {
+      if (action.error.message === "Request failed with status code 401") {
+        state.error = "Invalid user";
+        state.admins = undefined;
+      }
+
+      console.log("error in user slice", action.error);
     });
   },
 });

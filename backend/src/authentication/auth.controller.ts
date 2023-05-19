@@ -2,6 +2,7 @@ import {
   Controller,
   Get,
   Post,
+  Req,
   UseGuards,
   Request as Request2,
 } from '@nestjs/common';
@@ -9,6 +10,7 @@ import { AuthService } from './auth.service';
 import { JwtAuthGuard } from './guards/jwt-auth.guard';
 import { LocalAuthGuard } from './guards/local-auth.guard';
 import { AdminGuard } from './guards/admin.guard';
+import { TenantGuard } from './guards/tenant.guard';
 /* import { SuperAdminGuard } from './super-admin.guard'; */
 
 @Controller()
@@ -42,5 +44,22 @@ export class AuthController {
     console.log('body', req.body);
 
     return this.authService.signup_board_member(req.body);
+  }
+
+  @UseGuards(JwtAuthGuard, TenantGuard)
+  @Post('getUser')
+  async findOne(@Req() req) {
+    console.log('user hi');
+    const result = await this.authService.findOne(req.user.username);
+    console.log('controller result', result);
+    return result;
+  }
+
+  @Get('admins')
+  async findAdmins(@Req() req) {
+    console.log('admin hi');
+    const result = await this.authService.findAdmins();
+    console.log('controller result admin', result);
+    return result;
   }
 }

@@ -30,6 +30,18 @@ export class AuthService {
     return this.usersService.create(user.username, user.password);
   }
 
+  async findOne(username: string) {
+    const result = await this.usersService.findOne(username);
+    console.log('the service result', result);
+    return result;
+  }
+
+  async findAdmins() {
+    const result = await this.usersService.findAdmins();
+    console.log('the admins service', result);
+    return result;
+  }
+
   async validateUser(username: string, pass: string): Promise<any> {
     const user = await this.usersService.findOne(username);
     console.log('user found', user);

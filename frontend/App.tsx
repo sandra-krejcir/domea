@@ -12,6 +12,7 @@ import { FrontpageTenant } from "./components/tenants/frontpage";
 import { FrontpageAdmin } from "./components/admins/frontpage";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import * as SecureStore from "expo-secure-store";
+import { Categories } from "./components/problems/problemKategories";
 
 const Stack = createNativeStackNavigator();
 
@@ -34,6 +35,7 @@ const LeftDrawerScreenTenant = () => {
     >
       <LeftDrawer.Screen name="Home" component={FrontpageTenant} />
       <LeftDrawer.Screen name="Resident Service" component={ProblemsForm} />
+      <LeftDrawer.Screen name="Categories" component={Categories} />
     </LeftDrawer.Navigator>
   );
 };
