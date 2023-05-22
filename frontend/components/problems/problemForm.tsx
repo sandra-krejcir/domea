@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { AppDispatch, RootState } from "../../store";
 import { useSelector, useDispatch } from "react-redux";
 import { createProblem, fetchAllProblems } from "./problemsSlice";
-import { ProblemEntity } from "./problemsEntity";
 import { View, Text, TextInput, StyleSheet, Button, Image } from "react-native";
 import { Picture } from "./picture";
 import * as ImagePicker from "expo-image-picker";
@@ -10,6 +9,7 @@ import { CameraRoll } from "@react-native-camera-roll/camera-roll";
 import { MediaType } from "expo-media-library";
 import { useQueryClient } from "@tanstack/react-query";
 import { usePostProblem } from "./promblemsHooks";
+import { ProblemEntity } from "./problemsEntity";
 
 export function ProblemsForm({ setProblemDepartment, problemDepartment }) {
   const problems: ProblemEntity[] = useSelector(
@@ -44,6 +44,7 @@ export function ProblemsForm({ setProblemDepartment, problemDepartment }) {
   const handleSubmit = (event: any) => {
     event.preventDefault();
     console.log(`subject: ${subject}, description: ${description}`);
+    const createdAt = new Date();
     const problemEntity: ProblemEntity = new ProblemEntity(
       problemDepartment,
       subject,

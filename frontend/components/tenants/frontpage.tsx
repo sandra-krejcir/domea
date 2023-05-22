@@ -2,11 +2,11 @@ import React, { useEffect, useState } from "react";
 import { AppDispatch, RootState } from "../../store";
 import { useSelector, useDispatch } from "react-redux";
 import { View, Text, TextInput, StyleSheet, Button, Image } from "react-native";
-import { login, signup, updateToken } from "../users/usersSlice";
+import { findOne, login, signup, updateToken } from "../users/usersSlice";
 import { UsersEntity } from "../users/usersEntity";
 import * as SecureStore from "expo-secure-store";
-import { ScrollView } from "react-native-gesture-handler";
-import { SearchBar } from "@rneui/themed";
+import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
+import { IconComponentProvider, Icon } from "@react-native-material/core";
 
 export function FrontpageTenant() {
   const token: string | null | undefined = useSelector(
@@ -15,7 +15,9 @@ export function FrontpageTenant() {
   const error: string | undefined = useSelector(
     (state: RootState) => state.users.error
   );
+
   const dispatch = useDispatch<AppDispatch>();
+  const user = useSelector((state: RootState) => state.users.user);
 
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
@@ -25,6 +27,10 @@ export function FrontpageTenant() {
 
     dispatch(login(new UsersEntity(username, password)));
   };
+
+  useEffect(() => {
+    dispatch(findOne());
+  }, []);
 
   useEffect(() => {
     const asyncFunc = async () => {
@@ -62,23 +68,19 @@ export function FrontpageTenant() {
     time: "3 timer 45min",
   };
   const text2 = {
-    icon: "👨‍💻",
     title: "Ejendomskontor lukker om",
     time: "5 timer 30min",
   };
 
   return (
     <ScrollView>
-      <View>
-        <Text style={styles.text}>🏠 Blommegården</Text>
-      </View>
-
-      <View>
+      <View style={styles.searchBar}>
         <TextInput
-          style={styles.input}
+          style={styles.searchInput}
           placeholder="Søg efter dokumenter, artikler m.m"
           placeholderTextColor="#1A1B22"
         ></TextInput>
+        <Image source={require("../../assets/search.png")}></Image>
       </View>
 
       <View style={styles.mainContainer}>
@@ -114,29 +116,103 @@ export function FrontpageTenant() {
           </View>
         </View>
 
-        <View style={styles.rowContainer}>
-          <View style={styles.container}>
-            <Text>Picture 1</Text>
-          </View>
-          <View>
-            <View style={styles.container}>
-              <Text>Picture 2</Text>
+        <ScrollView horizontal={true} style={{ marginBottom: 20 }}>
+          <View
+            style={{
+              marginLeft: 15,
+              marginRight: 15,
+              marginTop: 15,
+            }}
+          >
+            <View
+              style={{
+                alignSelf: "center",
+              }}
+            >
+              {user &&
+                user.tenant.problem.map((problem: any) => (
+                  <View
+                    style={{
+                      width: "100%",
+                      margin: 20,
+                      borderRadius: 17,
+                      borderColor: "#F2F4F7",
+                      borderStyle: "dashed",
+                      backgroundColor: "#F2F4F7",
+                      borderWidth: 2,
+                      padding: 20,
+                    }}
+                  >
+                    <View
+                      style={{
+                        display: "flex",
+                        flexDirection: "row",
+                        alignItems: "center",
+                        width: "128%",
+                      }}
+                    >
+                      <View
+                        style={{
+                          display: "flex",
+                          flexDirection: "row",
+                          width: "70%",
+                          alignItems: "center",
+                          marginTop: 5,
+                        }}
+                      >
+                        <Text
+                          h3
+                          style={{
+                            marginBottom: 7,
+                          }}
+                        >
+                          {problem.subject}
+                        </Text>
+                        <Text
+                          style={{
+                            width: "100%",
+                          }}
+                        >
+                          - DEPARTMENT
+                        </Text>
+                      </View>
+                    </View>
+                    <Image
+                      style={{
+                        width: 100,
+                        height: 200,
+                        alignSelf: "center",
+                      }}
+                      source={{ uri: `${problem.image}` }}
+                    />
+                  </View>
+                ))}
             </View>
+            {/*  {user.tenant.problem.map((problem: any) => (
+                <>
+                  <Text>{problem.subject}</Text>
+                  <Text>{problem.description}</Text>
+                </>
+              ))} */}
           </View>
-        </View>
+        </ScrollView>
       </View>
     </ScrollView>
   );
 }
 const styles = StyleSheet.create({
-  input: {
-    height: 40,
+  searchInput: {
+    height: 50,
     margin: 12,
     borderWidth: 1,
     padding: 10,
-    borderRadius: 20,
+    borderRadius: 25,
     borderColor: "lightgrey",
     backgroundColor: "#F3F3F3",
+  },
+  searchBar: {
+    flex: 1,
+    flexDirection: "row",
   },
   text: {
     fontSize: 20,
