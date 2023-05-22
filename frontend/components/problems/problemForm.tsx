@@ -8,30 +8,52 @@ import { Picture } from "./picture";
 import * as ImagePicker from "expo-image-picker";
 import { CameraRoll } from "@react-native-camera-roll/camera-roll";
 import { MediaType } from "expo-media-library";
+import { useQueryClient } from "@tanstack/react-query";
+import { usePostProblem } from "./promblemsHooks";
 
 export function ProblemsForm() {
   const problems: ProblemEntity[] = useSelector(
     (state: RootState) => state.problems.problems
   );
-  const [camera, setCamera] = useState(false);
 
-  const dispatch = useDispatch<AppDispatch>();
+  // Redux
+  /* const count = useSelector((state: RootState) => state.counter.value);
+  const problems: ProblemEntity[] = useSelector(
+    (state: RootState) => state.problems.problems
+  ); */
+
+  /* const dispatch = useDispatch<AppDispatch>(); */
+
+  /*  dispatch(
+     createProblem(new ProblemEntity(subject, description, photoToDisplay))
+   ); */
+  /* useEffect(() => {
+     dispatch(fetchAllProblems())
+   }, []); */
+
+  const [camera, setCamera] = useState(false);
   const [subject, setSubject] = useState("");
   const [description, setDescription] = useState("");
   const [photoDisplayURL, setPhotoDisplayURL] = useState("hi");
 
+  //React Query
+  /* const { isLoading, error, data } = useGetProblems(); */
+  const queryClient = useQueryClient();
+  const { mutate: createProblem } = usePostProblem();
+
   const handleSubmit = (event: any) => {
     event.preventDefault();
-
-    dispatch(
-      createProblem(new ProblemEntity(subject, description, photoDisplayURL))
+    console.log(`subject: ${subject}, description: ${description}`);
+    const problemEntity: ProblemEntity = new ProblemEntity(
+      subject,
+      description,
+      photoDisplayURL
     );
-    console.log("here", photoDisplayURL);
+    createProblem(problemEntity, {
+      onSuccess: () =>
+        queryClient.invalidateQueries({ queryKey: ["problems"] }),
+    });
   };
-
-  useEffect(() => {
-    dispatch(fetchAllProblems());
-  }, []);
 
   return (
     <View style={{ flex: 1 }}>

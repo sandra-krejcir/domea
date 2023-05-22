@@ -13,10 +13,13 @@ import { FrontpageAdmin } from "./components/admins/frontpage";
 import { createDrawerNavigator } from "@react-navigation/drawer";
 import * as SecureStore from "expo-secure-store";
 import { Categories } from "./components/problems/problemKategories";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 
 const Stack = createNativeStackNavigator();
 
 const LeftDrawer = createDrawerNavigator();
+
+const queryClient = new QueryClient();
 
 const LeftDrawerScreenAdmin = () => {
   return (
@@ -45,23 +48,25 @@ export default function App() {
   SecureStore.setItemAsync("token", "");
   return (
     <NavigationContainer>
-      <Provider store={store}>
-        <View style={styles.container}>
-          <Stack.Navigator>
-            <Stack.Screen name="Login" component={Login} />
-            <Stack.Screen
-              options={{ headerShown: false }}
-              name="FrontpageAdmin"
-              component={LeftDrawerScreenAdmin}
-            />
-            <Stack.Screen
-              options={{ headerShown: false }}
-              name="FrontpageTenant"
-              component={LeftDrawerScreenTenant}
-            />
-          </Stack.Navigator>
-        </View>
-      </Provider>
+      <QueryClientProvider client={queryClient}>
+        <Provider store={store}>
+          <View style={styles.container}>
+            <Stack.Navigator>
+              <Stack.Screen name="Login" component={Login} />
+              <Stack.Screen
+                options={{ headerShown: false }}
+                name="FrontpageAdmin"
+                component={LeftDrawerScreenAdmin}
+              />
+              <Stack.Screen
+                options={{ headerShown: false }}
+                name="FrontpageTenant"
+                component={LeftDrawerScreenTenant}
+              />
+            </Stack.Navigator>
+          </View>
+        </Provider>
+      </QueryClientProvider>
     </NavigationContainer>
   );
 }
