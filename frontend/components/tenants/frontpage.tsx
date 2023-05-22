@@ -58,14 +58,13 @@ export function FrontpageTenant() {
 } */
 
   const text1 = {
-    icon: "🎧",
     title: "Servicecenter lukker om",
-    description: "3 timer 45min",
+    time: "3 timer 45min",
   };
   const text2 = {
     icon: "👨‍💻",
     title: "Ejendomskontor lukker om",
-    description: "5 timer 30min",
+    time: "5 timer 30min",
   };
 
   return (
@@ -84,15 +83,46 @@ export function FrontpageTenant() {
 
       <View style={styles.mainContainer}>
         <View style={styles.container}>
-          <Text>{text1.icon}</Text>
-          <Text>{text1.title}</Text>
-          <Text style={styles.text}> {text1.description}</Text>
+          <View>
+            <Image
+              style={styles.image}
+              source={require("../../assets/customer-service.png")}
+            ></Image>
+          </View>
+          <View style={styles.bubbleText}>
+            <Text>{text1.title}</Text>
+            <Text style={styles.text}>{text1.time}</Text>
+          </View>
         </View>
 
         <View style={styles.container}>
-          <Text>{text2.icon}</Text>
-          <Text>{text2.title}</Text>
-          <Text style={styles.text}>{text2.description}</Text>
+          <View style={styles.image}>
+            <Image source={require("../../assets/office-service.png")}></Image>
+          </View>
+          <View style={styles.bubbleText}>
+            <Text>{text2.title}</Text>
+            <Text style={styles.text}>{text2.time}</Text>
+          </View>
+        </View>
+
+        <View style={styles.problems}>
+          <View>
+            <Text style={styles.title}>My Problems</Text>
+          </View>
+          <View>
+            <Text style={styles.seeAll}>See all →</Text>
+          </View>
+        </View>
+
+        <View style={styles.rowContainer}>
+          <View style={styles.container}>
+            <Text>Picture 1</Text>
+          </View>
+          <View>
+            <View style={styles.container}>
+              <Text>Picture 2</Text>
+            </View>
+          </View>
         </View>
       </View>
     </ScrollView>
@@ -110,10 +140,22 @@ const styles = StyleSheet.create({
   },
   text: {
     fontSize: 20,
+    marginTop: 10,
+    padding: 10,
+  },
+  title: {
+    marginTop: 20,
+    fontSize: 20,
+  },
+  seeAll: {
+    marginTop: 20,
+    fontSize: 10,
+    fontWeight: "bold",
   },
   container: {
     flex: 1,
-    margin: 5,
+    margin: 3,
+    marginTop: 10,
     marginBottom: 10,
     padding: 20,
     borderRadius: 15,
@@ -122,9 +164,29 @@ const styles = StyleSheet.create({
   mainContainer: {
     flex: 1,
     flexDirection: "column",
-    margin: 20,
+    margin: 10,
     padding: 20,
     justifyContent: "space-evenly",
     borderRadius: 15,
+  },
+  rowContainer: {
+    flex: 1,
+    flexDirection: "row",
+    margin: 10,
+    justifyContent: "center",
+    borderRadius: 15,
+  },
+  problems: {
+    flex: 1,
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  bubbleText: {
+    flex: 1,
+    marginTop: 5,
+  },
+  image: {
+    flex: 1,
+    margin: 5,
   },
 });
