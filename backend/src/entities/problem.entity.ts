@@ -7,6 +7,9 @@ export class Problem {
   id: number;
 
   @Column()
+  department: string;
+
+  @Column()
   subject: string;
 
   @Column()
@@ -14,6 +17,9 @@ export class Problem {
 
   @Column({ nullable: true })
   image: string;
+
+  @Column()
+  createdAt: Date;
 
   @ManyToOne(() => TenantEntity, (tenant) => tenant.problem)
   tenant: TenantEntity;

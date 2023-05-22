@@ -30,9 +30,11 @@ export class ProblemsController {
     console.log('body', body);
 
     const createProblemDto = new CreateProblemDto(
+      body.problemDepartment,
       body.subject,
       body.description,
       body.photoDisplayURL,
+      body.createdAt,
     );
 
     createProblemDto.tenant = (

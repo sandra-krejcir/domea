@@ -11,7 +11,7 @@ import { MediaType } from "expo-media-library";
 import { useQueryClient } from "@tanstack/react-query";
 import { usePostProblem } from "./promblemsHooks";
 
-export function ProblemsForm() {
+export function ProblemsForm({ setProblemDepartment, problemDepartment }) {
   const problems: ProblemEntity[] = useSelector(
     (state: RootState) => state.problems.problems
   );
@@ -34,7 +34,7 @@ export function ProblemsForm() {
   const [camera, setCamera] = useState(false);
   const [subject, setSubject] = useState("");
   const [description, setDescription] = useState("");
-  const [photoDisplayURL, setPhotoDisplayURL] = useState("hi");
+  const [photoDisplayURL, setPhotoDisplayURL] = useState("");
 
   //React Query
   /* const { isLoading, error, data } = useGetProblems(); */
@@ -45,9 +45,11 @@ export function ProblemsForm() {
     event.preventDefault();
     console.log(`subject: ${subject}, description: ${description}`);
     const problemEntity: ProblemEntity = new ProblemEntity(
+      problemDepartment,
       subject,
       description,
-      photoDisplayURL
+      photoDisplayURL,
+      createdAt
     );
     createProblem(problemEntity, {
       onSuccess: () =>
@@ -55,6 +57,25 @@ export function ProblemsForm() {
     });
   };
 
+  /* const createdAt = new Date();
+
+    dispatch(
+      createProblem(
+        new ProblemEntity(
+          problemDepartment,
+          subject,
+          description,
+          photoDisplayURL,
+          createdAt
+        )
+      )
+    );
+  };
+
+  useEffect(() => {
+    console.log("here", photoDisplayURL);
+  }, []);
+ */
   return (
     <View style={{ flex: 1 }}>
       {camera ? (
@@ -65,6 +86,7 @@ export function ProblemsForm() {
         ></Picture>
       ) : (
         <>
+          <Button title="Go Back" onPress={() => setProblemDepartment("")} />
           <TextInput
             style={styles.input}
             onChangeText={setSubject}
