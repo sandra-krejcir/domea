@@ -35,7 +35,7 @@ export function FrontpageTenant() {
   }, []);
 
   return (
-    <View>
+    <View style={{ backgroundColor: "white", height: "100%" }}>
       <Text>Login</Text>
       <TextInput
         style={styles.input}

@@ -1,6 +1,6 @@
 import React from "react";
 import { StatusBar } from "expo-status-bar";
-import { StyleSheet, Text, View } from "react-native";
+import { StyleSheet, View, Image } from "react-native";
 import { Provider } from "react-redux";
 import { ProblemsForm } from "./components/problems/problemForm";
 import { Login } from "./components/users/login";
@@ -10,13 +10,43 @@ import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
 import { FrontpageTenant } from "./components/tenants/frontpage";
 import { FrontpageAdmin } from "./components/admins/frontpage";
-import { createDrawerNavigator } from "@react-navigation/drawer";
+import {
+  createDrawerNavigator,
+  DrawerContentScrollView,
+  DrawerItemList,
+} from "@react-navigation/drawer";
 import * as SecureStore from "expo-secure-store";
-import { Categories } from "./components/problems/problemKategories";
+import { Categories } from "./components/problems/problemCategories";
+import { ResidentService } from "./components/problems/residentService";
+import { Text } from "@rneui/themed";
 
 const Stack = createNativeStackNavigator();
 
 const LeftDrawer = createDrawerNavigator();
+
+const CustomHeader = (props: any) => {
+  return (
+    <DrawerContentScrollView {...props}>
+      <View
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          alignItems: "center",
+          marginBottom: 10,
+        }}
+      >
+        <Image
+          style={{ width: 30, height: 30, marginRight: 10, marginLeft: 15 }}
+          source={require("./assets/boligfy_icon.png")}
+        />
+        <Text h4 style={{ fontWeight: "700" }}>
+          Boligfy
+        </Text>
+      </View>
+      <DrawerItemList {...props} />
+    </DrawerContentScrollView>
+  );
+};
 
 const LeftDrawerScreenAdmin = () => {
   return (
@@ -32,11 +62,36 @@ const LeftDrawerScreenTenant = () => {
   return (
     <LeftDrawer.Navigator
       screenOptions={{ drawerPosition: "left", drawerType: "front" }}
+      drawerContent={(props) => <CustomHeader {...props} />}
     >
-      <LeftDrawer.Screen name="Home" component={FrontpageTenant} />
-      <LeftDrawer.Screen name="Resident Service" component={ProblemsForm} />
-      <LeftDrawer.Screen name="Categories" component={Categories} />
+      <LeftDrawer.Screen
+        name="Home"
+        component={FrontpageTenant}
+        options={{ headerTitle: () => <LogoTitle /> }}
+      />
+      <LeftDrawer.Screen name="Resident Service" component={ResidentService} />
     </LeftDrawer.Navigator>
+  );
+};
+
+const LogoTitle = () => {
+  return (
+    <View
+      style={{
+        display: "flex",
+        flexDirection: "row",
+        alignItems: "center",
+        marginBottom: 10,
+      }}
+    >
+      <Image
+        style={{ width: 30, height: 30, marginRight: 10 }}
+        source={require("./assets/boligfy_icon.png")}
+      />
+      <Text h4 style={{ fontWeight: "700" }}>
+        Boligfy
+      </Text>
+    </View>
   );
 };
 
@@ -48,7 +103,11 @@ export default function App() {
       <Provider store={store}>
         <View style={styles.container}>
           <Stack.Navigator>
-            <Stack.Screen name="Login" component={Login} />
+            <Stack.Screen
+              name="Login"
+              component={Login}
+              options={{ headerTitle: () => <LogoTitle /> }}
+            />
             <Stack.Screen
               options={{ headerShown: false }}
               name="FrontpageAdmin"
@@ -70,6 +129,6 @@ const styles = StyleSheet.create({
   container: {
     marginTop: 40,
     flex: 1,
-    backgroundColor: "#fff",
+    backgroundColor: "white",
   },
 });

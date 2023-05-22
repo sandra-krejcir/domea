@@ -30,4 +30,15 @@ export class ProblemsAPI {
       console.log("error", error);
     }
   }
+
+  static async delete(id: number) {
+    try {
+      const result = await axios.delete(BASE_URL + "/problems/" + id);
+      console.log(result);
+
+      return result.data;
+    } catch (error) {
+      console.log("error", error);
+    }
+  }
 }

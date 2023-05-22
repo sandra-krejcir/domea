@@ -20,6 +20,15 @@ export const createProblem = createAsyncThunk(
     return response;
   }
 );
+export const deleteProblem = createAsyncThunk(
+  "problems/", // This is a name for the thunk (must be unique) not the endpoint
+  async (id: number, thunkAPI) => {
+    console.log("hi thunk");
+    const response = ProblemsAPI.delete(id);
+
+    return response;
+  }
+);
 
 interface ProblemsState {
   problems: ProblemEntity[];
@@ -48,6 +57,9 @@ const problemsSlice = createSlice({
       // Add user to the state array
       console.log("hi", action);
       state.problems.push(action.payload);
+    });
+    builder.addCase(deleteProblem.fulfilled, (state, action) => {
+      console.log("deleted", action.payload);
     });
   },
 });

@@ -9,7 +9,7 @@ import * as ImagePicker from "expo-image-picker";
 import { CameraRoll } from "@react-native-camera-roll/camera-roll";
 import { MediaType } from "expo-media-library";
 
-export function ProblemsForm() {
+export function ProblemsForm({ setProblemDepartment, problemDepartment }) {
   const problems: ProblemEntity[] = useSelector(
     (state: RootState) => state.problems.problems
   );
@@ -18,19 +18,27 @@ export function ProblemsForm() {
   const dispatch = useDispatch<AppDispatch>();
   const [subject, setSubject] = useState("");
   const [description, setDescription] = useState("");
-  const [photoDisplayURL, setPhotoDisplayURL] = useState("hi");
+  const [photoDisplayURL, setPhotoDisplayURL] = useState("");
 
   const handleSubmit = (event: any) => {
     event.preventDefault();
+    const createdAt = new Date();
 
     dispatch(
-      createProblem(new ProblemEntity(subject, description, photoDisplayURL))
+      createProblem(
+        new ProblemEntity(
+          problemDepartment,
+          subject,
+          description,
+          photoDisplayURL,
+          createdAt
+        )
+      )
     );
-    console.log("here", photoDisplayURL);
   };
 
   useEffect(() => {
-    dispatch(fetchAllProblems());
+    console.log("here", photoDisplayURL);
   }, []);
 
   return (
@@ -43,6 +51,7 @@ export function ProblemsForm() {
         ></Picture>
       ) : (
         <>
+          <Button title="Go Back" onPress={() => setProblemDepartment("")} />
           <TextInput
             style={styles.input}
             onChangeText={setSubject}
