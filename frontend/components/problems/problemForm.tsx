@@ -3,16 +3,26 @@ import { AppDispatch, RootState } from "../../store";
 import { useSelector, useDispatch } from "react-redux";
 import { createProblem, fetchAllProblems } from "./problemsSlice";
 import { ProblemEntity } from "./problemsEntity";
-import { View, StyleSheet, Button, Image } from "react-native";
+import {
+  View,
+  StyleSheet,
+  Button,
+  Image,
+  GestureResponderEvent,
+} from "react-native";
 import { Picture } from "./picture";
 import * as ImagePicker from "expo-image-picker";
 import { CameraRoll } from "@react-native-camera-roll/camera-roll";
 import { MediaType } from "expo-media-library";
 import { TouchableOpacity, ScrollView } from "react-native-gesture-handler";
-import { Text } from "@rneui/themed";
+import { BottomSheet, Text, Divider } from "@rneui/themed";
 import { TextInput } from "react-native-paper";
 
-export function ProblemsForm({ setProblemDepartment, problemDepartment }) {
+export function ProblemsForm({
+  setProblemDepartment,
+  problemDepartment,
+  user,
+}) {
   const problems: ProblemEntity[] = useSelector(
     (state: RootState) => state.problems.problems
   );
@@ -22,10 +32,12 @@ export function ProblemsForm({ setProblemDepartment, problemDepartment }) {
   const [subject, setSubject] = useState("");
   const [description, setDescription] = useState("");
   const [photoDisplayURL, setPhotoDisplayURL] = useState("");
+  const [isVisible, setIsVisible] = useState(false);
 
-  const handleSubmit = (event: any) => {
-    event.preventDefault();
+  const handleSubmit = () => {
     const createdAt = new Date();
+
+    console.log("hi");
 
     dispatch(
       createProblem(
@@ -61,7 +73,7 @@ export function ProblemsForm({ setProblemDepartment, problemDepartment }) {
           photoDisplayURL={photoDisplayURL}
         ></Picture>
       ) : (
-        <ScrollView style={{ marginBottom: 20 }}>
+        <ScrollView style={{ marginBottom: 30 }}>
           <View
             style={{
               display: "flex",
@@ -190,18 +202,156 @@ export function ProblemsForm({ setProblemDepartment, problemDepartment }) {
               justifyContent: "center",
               alignItems: "center",
             }}
-            onPress={() => handleSubmit}
+            onPress={() => setIsVisible(true)}
           >
-            <Text style={{ color: "white", fontWeight: "700" }}>SEND CASE</Text>
+            <Text style={{ color: "white", fontWeight: "700", fontSize: 14 }}>
+              SEND CASE
+            </Text>
           </TouchableOpacity>
         </ScrollView>
       )}
 
-      {/* {problems?.map((problem) => (
-            <View key={problem?.id}>
-                <Text>{problem?.subject} - {problem?.description}</Text>
+      <BottomSheet isVisible={isVisible}>
+        <View style={{ backgroundColor: "white" }}>
+          <Text
+            style={{
+              color: "#101828",
+              fontSize: 18,
+              fontWeight: "600",
+              margin: 20,
+              alignSelf: "center",
+            }}
+          >
+            Case summery
+          </Text>
+          <Divider width={1.5} style={{ opacity: 0.3 }} />
+          <View
+            style={{
+              display: "flex",
+              flexDirection: "row",
+              gap: 15,
+            }}
+          >
+            <View style={{ margin: 20 }}>
+              <Text
+                style={{
+                  color: "#101828",
+                  fontSize: 12,
+                  fontWeight: "700",
+                  marginBottom: 5,
+                }}
+              >
+                CATEGORY
+              </Text>
+              <Text>{problemDepartment}</Text>
             </View>
-        ))}  */}
+            <View style={{ marginTop: 20 }}>
+              <Text
+                style={{
+                  color: "#101828",
+                  fontSize: 12,
+                  fontWeight: "700",
+                  marginBottom: 5,
+                }}
+              >
+                SUBJECT
+              </Text>
+              <Text>{subject}</Text>
+            </View>
+          </View>
+          <Divider
+            width={1.5}
+            style={{
+              marginLeft: 15,
+              marginRight: 15,
+              opacity: 0.3,
+            }}
+          />
+          <Text
+            style={{
+              color: "#101828",
+              fontSize: 12,
+              fontWeight: "700",
+              marginBottom: 8,
+              marginTop: 20,
+              marginLeft: 20,
+            }}
+          >
+            DESCRIPTION
+          </Text>
+          <Text
+            style={{
+              marginBottom: 20,
+              marginLeft: 20,
+              marginRight: 20,
+            }}
+          >
+            {description}
+          </Text>
+          <Divider
+            width={1.5}
+            style={{
+              marginLeft: 15,
+              marginRight: 15,
+              opacity: 0.3,
+            }}
+          />
+          <View
+            style={{
+              padding: 10,
+              backgroundColor: "#F2F4F7",
+              margin: 20,
+            }}
+          >
+            <Image
+              style={{
+                width: "100%",
+                height: 200,
+              }}
+              source={{ uri: `${photoDisplayURL}` }}
+            />
+          </View>
+          <View style={{ padding: 15, backgroundColor: "#F2F4F7", margin: 20 }}>
+            <Text
+              style={{
+                color: "#101828",
+                fontSize: 18,
+                fontWeight: "700",
+                marginBottom: 20,
+                marginTop: 10,
+                alignSelf: "center",
+              }}
+            >
+              Your Contact Info
+            </Text>
+            <Divider
+              width={1.5}
+              style={{
+                marginLeft: 15,
+                marginRight: 15,
+              }}
+            />
+            <View>
+              <View>
+                <Text></Text>
+                <Text></Text>
+              </View>
+              <View>
+                <Text></Text>
+                <Text></Text>
+              </View>
+            </View>
+          </View>
+          <View>
+            <TouchableOpacity onPress={() => setIsVisible(false)}>
+              <Text>Cancel</Text>
+            </TouchableOpacity>
+            <TouchableOpacity>
+              <Text>Send Case</Text>
+            </TouchableOpacity>
+          </View>
+        </View>
+      </BottomSheet>
     </View>
   );
 }

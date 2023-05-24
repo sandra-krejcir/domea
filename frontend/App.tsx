@@ -53,7 +53,7 @@ const LeftDrawerScreenAdmin = () => {
     <LeftDrawer.Navigator
       screenOptions={{ drawerPosition: "left", drawerType: "front" }}
     >
-      <LeftDrawer.Screen name="Home" component={FrontpageAdmin} />
+      <LeftDrawer.Screen name="About Complex" component={FrontpageAdmin} />
     </LeftDrawer.Navigator>
   );
 };

@@ -50,6 +50,7 @@ interface UsersState {
   admins: any | undefined;
   token: string | undefined | null;
   role: string | undefined | null;
+  userId: number;
   error: string | undefined;
 }
 
@@ -59,6 +60,7 @@ const initialState = {
   token: undefined,
   error: undefined,
   role: undefined,
+  userId: 0,
 } as UsersState;
 
 // Then, handle actions in your reducers:
@@ -90,6 +92,8 @@ const usersSlice = createSlice({
       state.error = undefined;
       state.token = action.payload?.access_token;
       state.role = action.payload?.role;
+      state.userId = action.payload?.id;
+      console.log(action.payload);
     });
     builder.addCase(login.rejected, (state, action) => {
       if (action.error.message === "Request failed with status code 401") {

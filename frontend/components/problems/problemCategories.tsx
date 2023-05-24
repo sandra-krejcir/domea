@@ -11,7 +11,7 @@ import {
 } from "react-native";
 import { AppDispatch, RootState } from "../../store";
 import { useSelector, useDispatch } from "react-redux";
-import { findAdmins, findOne } from "../users/usersSlice";
+import { findOne } from "../users/usersSlice";
 import { UsersEntity } from "components/users/usersEntity";
 import { Tab, Text, TabView, Divider } from "@rneui/themed";
 import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
@@ -23,7 +23,7 @@ const itemPerRow = 2.5;
 const windowWidth = width;
 const childWidth = windowWidth / itemPerRow;
 
-export function Categories({ setProblemDepartment }) {
+export function Categories({ setProblemDepartment, user }) {
   const [selectedView, setSelectedView] = useState(0);
   const categories = [
     { title: "Bathroom & Kitchen" },
@@ -31,22 +31,6 @@ export function Categories({ setProblemDepartment }) {
     { title: "Heating, doors & windows" },
     { title: "Other problems" },
   ];
-  const dispatch = useDispatch<AppDispatch>();
-  const user = useSelector((state: RootState) => state.users.user);
-  const admins: UsersEntity[] = useSelector(
-    (state: RootState) => state.users.admins
-  );
-  if (user) {
-    console.log(
-      "my user",
-      user.tenant.problem.map((problem: any) => problem)
-    );
-  }
-  console.log("my admins", admins);
-  useEffect(() => {
-    dispatch(findOne());
-    dispatch(findAdmins());
-  }, []);
 
   return (
     <View style={{ backgroundColor: "white", height: "100%", paddingTop: 25 }}>

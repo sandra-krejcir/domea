@@ -23,7 +23,12 @@ export class AuthService {
     return this.usersService.create_board_member(
       user.username,
       user.password,
+      user.firstname,
+      user.lastname,
       user.phone,
+      user.address,
+      user.zipCode,
+      user.city,
     );
   }
   async signup(user: any) {
@@ -63,6 +68,7 @@ export class AuthService {
     return {
       access_token: this.jwtService.sign(payload),
       role: user.role,
+      id: user.id,
     };
   }
 }
