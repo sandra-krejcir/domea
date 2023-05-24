@@ -212,18 +212,49 @@ export function ProblemsForm({
       )}
 
       <BottomSheet isVisible={isVisible}>
-        <View style={{ backgroundColor: "white" }}>
-          <Text
+        <View
+          style={{
+            backgroundColor: "white",
+            borderRadius: 20,
+            paddingBottom: 30,
+          }}
+        >
+          <View
             style={{
-              color: "#101828",
-              fontSize: 18,
-              fontWeight: "600",
-              margin: 20,
-              alignSelf: "center",
+              marginTop: 15,
+              marginBottom: 15,
+              display: "flex",
+              flexDirection: "row",
+              justifyContent: "space-between",
+              alignItems: "center",
+              marginLeft: 15,
+              marginRight: 15,
             }}
           >
-            Case summery
-          </Text>
+            <Text
+              style={{ color: "#667085" }}
+              onPress={() => setIsVisible(false)}
+            >
+              Cancel
+            </Text>
+            <Text
+              style={{
+                color: "#101828",
+                fontSize: 18,
+                fontWeight: "600",
+                alignSelf: "center",
+                marginLeft: 20,
+              }}
+            >
+              Case summery
+            </Text>
+            <Text
+              style={{ color: "#039855", fontWeight: "500" }}
+              onPress={() => handleSubmit()}
+            >
+              Send Case
+            </Text>
+          </View>
           <Divider width={1.5} style={{ opacity: 0.3 }} />
           <View
             style={{
@@ -317,8 +348,7 @@ export function ProblemsForm({
                 color: "#101828",
                 fontSize: 18,
                 fontWeight: "700",
-                marginBottom: 20,
-                marginTop: 10,
+                marginBottom: 10,
                 alignSelf: "center",
               }}
             >
@@ -332,23 +362,54 @@ export function ProblemsForm({
               }}
             />
             <View>
-              <View>
-                <Text></Text>
-                <Text></Text>
+              <View
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                }}
+              >
+                <Text
+                  style={{
+                    color: "#101828",
+                    fontSize: 12,
+                    fontWeight: "700",
+                    marginTop: 20,
+                    marginLeft: 20,
+                  }}
+                >
+                  E-MAIL
+                </Text>
+                <Text style={{ marginTop: 20, marginRight: 20 }}>
+                  {user.username}
+                </Text>
               </View>
-              <View>
-                <Text></Text>
-                <Text></Text>
+              <View
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  marginBottom: 20,
+                }}
+              >
+                <Text
+                  style={{
+                    color: "#101828",
+                    fontSize: 12,
+                    fontWeight: "700",
+                    marginTop: 20,
+                    marginLeft: 20,
+                  }}
+                >
+                  PHONE
+                </Text>
+                <Text style={{ marginTop: 20, marginRight: 20 }}>
+                  {user.username}
+                </Text>
               </View>
             </View>
-          </View>
-          <View>
-            <TouchableOpacity onPress={() => setIsVisible(false)}>
-              <Text>Cancel</Text>
-            </TouchableOpacity>
-            <TouchableOpacity>
-              <Text>Send Case</Text>
-            </TouchableOpacity>
           </View>
         </View>
       </BottomSheet>
