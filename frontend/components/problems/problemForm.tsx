@@ -183,13 +183,23 @@ export function ProblemsForm({
             </TouchableOpacity>
           )}
           {photoDisplayURL && (
-            <>
-              <Button
-                title="Delete Image"
+            <View
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "space-around",
+              }}
+            >
+              <Text
+                style={{ margin: 8 }}
                 onPress={() => setPhotoDisplayURL("")}
-              />
-              <Button title="Retake Picture" onPress={() => setCamera(true)} />
-            </>
+              >
+                Delete Image
+              </Text>
+              <Text style={{ margin: 8 }} onPress={() => setCamera(true)}>
+                Retake Picture
+              </Text>
+            </View>
           )}
           <TouchableOpacity
             style={{
@@ -205,7 +215,7 @@ export function ProblemsForm({
             onPress={() => setIsVisible(true)}
           >
             <Text style={{ color: "white", fontWeight: "700", fontSize: 14 }}>
-              SEND CASE
+              NEXT
             </Text>
           </TouchableOpacity>
         </ScrollView>
