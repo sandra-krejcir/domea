@@ -19,6 +19,7 @@ import * as SecureStore from "expo-secure-store";
 import { Categories } from "./components/problems/problemCategories";
 import { ResidentService } from "./components/problems/residentService";
 import { Text } from "@rneui/themed";
+import { TenantFormAdmin } from "./components/admins/tenantForm";
 
 const Stack = createNativeStackNavigator();
 
@@ -43,7 +44,7 @@ const CustomHeader = (props: any) => {
           Boligfy
         </Text>
       </View>
-      <DrawerItemList {...props} />
+	  <DrawerItemList {...props} />
     </DrawerContentScrollView>
   );
 };
@@ -52,8 +53,10 @@ const LeftDrawerScreenAdmin = () => {
   return (
     <LeftDrawer.Navigator
       screenOptions={{ drawerPosition: "left", drawerType: "front" }}
+      drawerContent={(props) => <CustomHeader {...props} />}
     >
-      <LeftDrawer.Screen name="Home" component={FrontpageAdmin} />
+      <LeftDrawer.Screen name="Home" component={FrontpageAdmin} options={{ headerTitle: () => <LogoTitle /> }}/>
+      <LeftDrawer.Screen name="Create tenant" component={TenantFormAdmin} options={{ headerTitle: () => <LogoTitle /> }}/>
     </LeftDrawer.Navigator>
   );
 };
@@ -96,8 +99,8 @@ const LogoTitle = () => {
 };
 
 export default function App() {
-  SecureStore.setItemAsync("role", "");
-  SecureStore.setItemAsync("token", "");
+	SecureStore.setItemAsync("role", "");
+	SecureStore.setItemAsync("token", "");
   return (
     <NavigationContainer>
       <Provider store={store}>
