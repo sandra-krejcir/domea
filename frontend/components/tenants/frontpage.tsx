@@ -1,13 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { AppDispatch, RootState } from "../../store";
 import { useSelector, useDispatch } from "react-redux";
-import { View, TextInput, StyleSheet, Button, Image } from "react-native";
+import { View, StyleSheet, Image } from "react-native";
 import { findOne, login, signup, updateToken } from "../users/usersSlice";
 import { UsersEntity } from "../users/usersEntity";
 import * as SecureStore from "expo-secure-store";
 import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
-import { IconComponentProvider, Icon } from "@react-native-material/core";
-import { Text, Divider, useTheme } from "@rneui/themed";
+import { Text, Divider } from "@rneui/themed";
 
 export function FrontpageTenant() {
   const token: string | null | undefined = useSelector(
@@ -84,7 +83,7 @@ export function FrontpageTenant() {
         ></TextInput>
         <Image source={require("../../assets/search.png")}></Image>
       </View>
- */}
+      */}
         <View style={{ marginLeft: 20 }}>
           <Text style={styles.title} h4>
             Resident support
