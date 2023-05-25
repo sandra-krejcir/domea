@@ -142,11 +142,11 @@ const usersSlice = createSlice({
     });
     builder.addCase(createTenant.fulfilled, (state, action) => {
       console.log("success", action.payload);
-      state.error = undefined;
+      state.error = "Tenant was created successfully";
     });
     builder.addCase(createTenant.rejected, (state, action) => {
       if (action.error.message === "Request failed with status code 401") {
-        state.error = "Invalid user";
+        state.error = "Tenant creation could not be completed. Please try again later.";
       }
 
       console.log("error in user slice", action.error);
