@@ -3,6 +3,7 @@ import { Platform } from "react-native";
 import { UsersEntity } from "./usersEntity";
 import { BASE_URL } from "@env";
 import * as SecureStore from "expo-secure-store";
+import { TenantEntity } from "../../components/admins/tenantEntity";
 
 export class UsersAPI {
   static async signup(user: UsersEntity) {
@@ -52,5 +53,19 @@ export class UsersAPI {
 
     //     }
     // }
+  }
+
+  static async create(tenant: TenantEntity) {
+    try {
+      const token = await SecureStore.getItemAsync("token");
+      const headers = {
+        Authorization: `Bearer ${token}`,
+      };
+      const result = await axios.post(BASE_URL + "/auth/signup-tenant", tenant, {
+        headers,
+      });
+
+      return result.data;
+    } catch (error) {}
   }
 }

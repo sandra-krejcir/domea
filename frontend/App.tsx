@@ -16,14 +16,17 @@ import {
   DrawerItemList,
 } from "@react-navigation/drawer";
 import * as SecureStore from "expo-secure-store";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Categories } from "./components/problems/problemCategories";
 import { ResidentService } from "./components/problems/residentService";
 import { Text } from "@rneui/themed";
+import { TenantFormAdmin } from "./components/admins/tenantForm";
 
 const Stack = createNativeStackNavigator();
 
 const LeftDrawer = createDrawerNavigator();
 
+const queryClient = new QueryClient();
 const CustomHeader = (props: any) => {
   return (
     <DrawerContentScrollView {...props}>
@@ -52,8 +55,18 @@ const LeftDrawerScreenAdmin = () => {
   return (
     <LeftDrawer.Navigator
       screenOptions={{ drawerPosition: "left", drawerType: "front" }}
+      drawerContent={(props) => <CustomHeader {...props} />}
     >
-      <LeftDrawer.Screen name="About Complex" component={FrontpageAdmin} />
+      <LeftDrawer.Screen
+        name="Home"
+        component={FrontpageAdmin}
+        options={{ headerTitle: () => <LogoTitle /> }}
+      />
+      <LeftDrawer.Screen
+        name="Create tenant"
+        component={TenantFormAdmin}
+        options={{ headerTitle: () => <LogoTitle /> }}
+      />
     </LeftDrawer.Navigator>
   );
 };
@@ -100,27 +113,29 @@ export default function App() {
   SecureStore.setItemAsync("token", "");
   return (
     <NavigationContainer>
-      <Provider store={store}>
-        <View style={styles.container}>
-          <Stack.Navigator>
-            <Stack.Screen
-              name="Login"
-              component={Login}
-              options={{ headerTitle: () => <LogoTitle /> }}
-            />
-            <Stack.Screen
-              options={{ headerShown: false }}
-              name="FrontpageAdmin"
-              component={LeftDrawerScreenAdmin}
-            />
-            <Stack.Screen
-              options={{ headerShown: false }}
-              name="FrontpageTenant"
-              component={LeftDrawerScreenTenant}
-            />
-          </Stack.Navigator>
-        </View>
-      </Provider>
+      <QueryClientProvider client={queryClient}>
+        <Provider store={store}>
+          <View style={styles.container}>
+            <Stack.Navigator>
+              <Stack.Screen
+                name="Login"
+                component={Login}
+                options={{ headerTitle: () => <LogoTitle /> }}
+              />
+              <Stack.Screen
+                options={{ headerShown: false }}
+                name="FrontpageAdmin"
+                component={LeftDrawerScreenAdmin}
+              />
+              <Stack.Screen
+                options={{ headerShown: false }}
+                name="FrontpageTenant"
+                component={LeftDrawerScreenTenant}
+              />
+            </Stack.Navigator>
+          </View>
+        </Provider>
+      </QueryClientProvider>
     </NavigationContainer>
   );
 }

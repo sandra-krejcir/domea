@@ -4,55 +4,43 @@ import { useSelector, useDispatch } from "react-redux";
 import { View, Image, StyleSheet } from "react-native";
 import { Text } from '@rneui/themed';
 import { TextInput } from "react-native-paper";
-import { login, signup, updateRole, updateToken } from "./usersSlice";
-import { UsersEntity } from "./usersEntity";
-import * as SecureStore from "expo-secure-store";
+import { TenantEntity } from "./tenantEntity";
+import { createTenant } from "../../components/users/usersSlice";
 import { TouchableOpacity } from "react-native-gesture-handler";
 
-export function Login({ navigation }) {
-  const token: string | null | undefined = useSelector(
-    (state: RootState) => state.users.token
-  );
-  const error: string | undefined = useSelector(
-    (state: RootState) => state.users.error
-  );
-  const role: string | null | undefined = useSelector(
-    (state: RootState) => state.users.token
-  );
+export function TenantFormAdmin() {
   const dispatch = useDispatch<AppDispatch>();
-
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
+  const [firstname, setFirstname] = useState("");
+  const [lastname, setLastname] = useState("");
 
-  const handleLoginSuccess = () => {
-    dispatch(login(new UsersEntity(username, password)));
+  const handleSubmit = () => {
+
+    dispatch(
+      createTenant(
+        new TenantEntity(
+          username,
+		  password,
+          firstname,
+		  lastname
+        )
+      )
+    );
   };
 
   useEffect(() => {
-    const asyncFunc = async () => {
-      const token = await SecureStore.getItemAsync("token");
-      const role = await SecureStore.getItemAsync("role");
-
-      console.log("login");
-      if (role === "admin") {
-        console.log("1", role);
-        navigation.navigate("FrontpageAdmin");
-      } else if (role === "user") {
-        navigation.navigate("FrontpageTenant");
-      } else console.log(role);
-    };
-    asyncFunc();
-  }, [token, role]);
+    // console.log("here", photoDisplayURL);
+  }, []);
 
   return (
     <View style={styles.container}>
-		<Image
-        style={styles.image}
-        source={require('../../assets/green-gradient.png')}
-      />
-      <Text h1 h1Style={styles.h1}>Login</Text>
-	  <Text style={styles.text}>Welcome back! Please enter your details.</Text>
-	  <View style={styles.form}>
+	<Image
+	style={styles.image}
+	source={require('../../assets/green-gradient.png')}
+  />
+  <Text h1 h1Style={styles.h1}>Create tenant</Text>
+      <View style={styles.form}>
 		<TextInput
 		onChangeText={setUsername}
 		value={username}
@@ -64,7 +52,7 @@ export function Login({ navigation }) {
 		selectionColor="black"
 		textColor="black"
 		style={styles.input}
-		/>
+        />
 		<TextInput
 		onChangeText={setPassword}
 		value={password}
@@ -76,11 +64,35 @@ export function Login({ navigation }) {
 		selectionColor="black"
 		textColor="black"
 		style={styles.input}
-		/>
-		<TouchableOpacity style={styles.button} onPress={() => handleLoginSuccess()}>
-			<Text style={styles.buttontext}>{"Login"}</Text>
-		</TouchableOpacity>
-		</View>
+        />
+		<TextInput
+		onChangeText={setFirstname}
+		value={firstname}
+		label="First name *"
+		mode="outlined"
+		outlineColor="#D0D5DD"
+		outlineStyle={{ borderWidth: 2 }}
+		activeOutlineColor="#A5ED7B"
+		selectionColor="black"
+		textColor="black"
+		style={styles.input}
+        />
+		<TextInput
+		onChangeText={setLastname}
+		value={lastname}
+		label="Last name *"
+		mode="outlined"
+		outlineColor="#D0D5DD"
+		outlineStyle={{ borderWidth: 2 }}
+		activeOutlineColor="#A5ED7B"
+		selectionColor="black"
+		textColor="black"
+		style={styles.input}
+        />
+		<TouchableOpacity style={styles.button} onPress={() => handleSubmit()}>
+      		<Text style={styles.buttontext}>{"Create tenant"}</Text>
+    	</TouchableOpacity>
+	  </View>
     </View>
   );
 }
@@ -103,13 +115,6 @@ const styles = StyleSheet.create({
     fontSize: 24,
     lineHeight: 32,
     fontWeight: '600',
-    marginBottom: 8,
-  },
-  text: {
-	color: '#667085',
-    fontSize: 16,
-    lineHeight: 24,
-    fontWeight: '500',
     marginBottom: 32,
   },
   form: {

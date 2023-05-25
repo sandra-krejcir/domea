@@ -2,6 +2,7 @@ import { createAsyncThunk, createSlice, PayloadAction } from "@reduxjs/toolkit";
 import { UsersAPI } from "./usersAPI";
 import { UsersEntity } from "./usersEntity";
 import * as SecureStore from "expo-secure-store";
+import { TenantEntity } from "../../components/admins/tenantEntity";
 
 // First, create the thunk
 export const login = createAsyncThunk(
@@ -41,6 +42,15 @@ export const findAdmins = createAsyncThunk(
     const response = await UsersAPI.findAdmins();
 
     console.log("the admins", response);
+    return response;
+  }
+);
+
+export const createTenant = createAsyncThunk(
+  "tenant/create", // This is a name for the thunk (must be unique) not the endpoint
+  async (tenant: TenantEntity, thunkAPI) => {
+    const response = UsersAPI.create(tenant);
+
     return response;
   }
 );
@@ -126,6 +136,17 @@ const usersSlice = createSlice({
       if (action.error.message === "Request failed with status code 401") {
         state.error = "Invalid user";
         state.admins = undefined;
+      }
+
+      console.log("error in user slice", action.error);
+    });
+    builder.addCase(createTenant.fulfilled, (state, action) => {
+      console.log("success", action.payload);
+      state.error = undefined;
+    });
+    builder.addCase(createTenant.rejected, (state, action) => {
+      if (action.error.message === "Request failed with status code 401") {
+        state.error = "Invalid user";
       }
 
       console.log("error in user slice", action.error);
