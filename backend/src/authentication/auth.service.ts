@@ -15,7 +15,7 @@ export class AuthService {
       user.password,
       user.firstname,
       user.lastname,
-      user.birthday,
+      user.phone,
     );
   }
 

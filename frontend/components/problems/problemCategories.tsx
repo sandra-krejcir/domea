@@ -23,7 +23,9 @@ const itemPerRow = 2.5;
 const windowWidth = width;
 const childWidth = windowWidth / itemPerRow;
 
-export function Categories({ setProblemDepartment, user }) {
+export function Categories({ setProblemDepartment }) {
+  const dispatch = useDispatch<AppDispatch>();
+  const user = useSelector((state: RootState) => state.users.user);
   const [selectedView, setSelectedView] = useState(0);
   const categories = [
     { title: "Bathroom & Kitchen" },
@@ -31,6 +33,10 @@ export function Categories({ setProblemDepartment, user }) {
     { title: "Heating, doors & windows" },
     { title: "Other problems" },
   ];
+
+  useEffect(() => {
+    dispatch(findOne());
+  }, []);
 
   return (
     <View style={{ backgroundColor: "white", height: "100%", paddingTop: 25 }}>

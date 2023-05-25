@@ -19,15 +19,18 @@ import { usePostProblem } from "./promblemsHooks";
 import { TouchableOpacity, ScrollView } from "react-native-gesture-handler";
 import { BottomSheet, Text, Divider } from "@rneui/themed";
 import { TextInput } from "react-native-paper";
+import { findOne } from "../users/usersSlice";
 
-export function ProblemsForm({
-  setProblemDepartment,
-  problemDepartment,
-  user,
-}) {
+export function ProblemsForm({ setProblemDepartment, problemDepartment }) {
   const problems: ProblemEntity[] = useSelector(
     (state: RootState) => state.problems.problems
   );
+  const dispatch = useDispatch<AppDispatch>();
+  const user = useSelector((state: RootState) => state.users.user);
+
+  useEffect(() => {
+    dispatch(findOne());
+  }, []);
 
   // Redux
   /* const count = useSelector((state: RootState) => state.counter.value);
@@ -49,6 +52,7 @@ export function ProblemsForm({
   const [description, setDescription] = useState("");
   const [photoDisplayURL, setPhotoDisplayURL] = useState("");
   const [isVisible, setIsVisible] = useState(false);
+  const [error, setError] = useState("");
 
   //React Query
   /* const { isLoading, error, data } = useGetProblems(); */
@@ -65,8 +69,14 @@ export function ProblemsForm({
       createdAt
     );
     createProblem(problemEntity, {
-      onSuccess: () =>
-        queryClient.invalidateQueries({ queryKey: ["problems"] }),
+      onSuccess: () => {
+        setIsVisible(false);
+        setError("Problem creation success");
+        setSubject("");
+        setDescription("");
+        setPhotoDisplayURL("");
+        /*  queryClient.invalidateQueries({ queryKey: ["problems"] }), */
+      },
     });
   };
 
@@ -256,7 +266,12 @@ export function ProblemsForm({
         </ScrollView>
       )}
 
-      <BottomSheet isVisible={isVisible}>
+      <BottomSheet
+        onBackdropPress={() => {
+          setIsVisible(false);
+        }}
+        isVisible={isVisible}
+      >
         <View
           style={{
             backgroundColor: "white",
@@ -264,198 +279,219 @@ export function ProblemsForm({
             paddingBottom: 30,
           }}
         >
-          <View
-            style={{
-              marginTop: 15,
-              marginBottom: 15,
-              display: "flex",
-              flexDirection: "row",
-              justifyContent: "space-between",
-              alignItems: "center",
-              marginLeft: 15,
-              marginRight: 15,
-            }}
-          >
-            <Text
-              style={{ color: "#667085" }}
-              onPress={() => setIsVisible(false)}
+          <>
+            <View
+              style={{
+                marginTop: 15,
+                marginBottom: 15,
+                display: "flex",
+                flexDirection: "row",
+                justifyContent: "space-between",
+                alignItems: "center",
+                marginLeft: 15,
+                marginRight: 15,
+              }}
             >
-              Cancel
-            </Text>
+              <Text
+                style={{ color: "#667085" }}
+                onPress={() => setIsVisible(false)}
+              >
+                Cancel
+              </Text>
+              <Text
+                style={{
+                  color: "#101828",
+                  fontSize: 18,
+                  fontWeight: "600",
+                  alignSelf: "center",
+                  marginLeft: 20,
+                }}
+              >
+                Case summery
+              </Text>
+              <Text
+                style={{ color: "#039855", fontWeight: "500" }}
+                onPress={() => handleSubmit()}
+              >
+                Send Case
+              </Text>
+            </View>
+            <Divider width={1.5} style={{ opacity: 0.3 }} />
+            <View
+              style={{
+                display: "flex",
+                flexDirection: "row",
+                gap: 15,
+              }}
+            >
+              <View style={{ margin: 20 }}>
+                <Text
+                  style={{
+                    color: "#101828",
+                    fontSize: 12,
+                    fontWeight: "700",
+                    marginBottom: 5,
+                  }}
+                >
+                  CATEGORY
+                </Text>
+                <Text>{problemDepartment}</Text>
+              </View>
+              <View style={{ marginTop: 20 }}>
+                <Text
+                  style={{
+                    color: "#101828",
+                    fontSize: 12,
+                    fontWeight: "700",
+                    marginBottom: 5,
+                  }}
+                >
+                  SUBJECT
+                </Text>
+                <Text>{subject}</Text>
+              </View>
+            </View>
+            <Divider
+              width={1.5}
+              style={{
+                marginLeft: 15,
+                marginRight: 15,
+                opacity: 0.3,
+              }}
+            />
             <Text
               style={{
                 color: "#101828",
-                fontSize: 18,
-                fontWeight: "600",
-                alignSelf: "center",
+                fontSize: 12,
+                fontWeight: "700",
+                marginBottom: 8,
+                marginTop: 20,
                 marginLeft: 20,
               }}
             >
-              Case summery
+              DESCRIPTION
             </Text>
             <Text
-              style={{ color: "#039855", fontWeight: "500" }}
-              onPress={() => handleSubmit()}
-            >
-              Send Case
-            </Text>
-          </View>
-          <Divider width={1.5} style={{ opacity: 0.3 }} />
-          <View
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              gap: 15,
-            }}
-          >
-            <View style={{ margin: 20 }}>
-              <Text
-                style={{
-                  color: "#101828",
-                  fontSize: 12,
-                  fontWeight: "700",
-                  marginBottom: 5,
-                }}
-              >
-                CATEGORY
-              </Text>
-              <Text>{problemDepartment}</Text>
-            </View>
-            <View style={{ marginTop: 20 }}>
-              <Text
-                style={{
-                  color: "#101828",
-                  fontSize: 12,
-                  fontWeight: "700",
-                  marginBottom: 5,
-                }}
-              >
-                SUBJECT
-              </Text>
-              <Text>{subject}</Text>
-            </View>
-          </View>
-          <Divider
-            width={1.5}
-            style={{
-              marginLeft: 15,
-              marginRight: 15,
-              opacity: 0.3,
-            }}
-          />
-          <Text
-            style={{
-              color: "#101828",
-              fontSize: 12,
-              fontWeight: "700",
-              marginBottom: 8,
-              marginTop: 20,
-              marginLeft: 20,
-            }}
-          >
-            DESCRIPTION
-          </Text>
-          <Text
-            style={{
-              marginBottom: 20,
-              marginLeft: 20,
-              marginRight: 20,
-            }}
-          >
-            {description}
-          </Text>
-          <Divider
-            width={1.5}
-            style={{
-              marginLeft: 15,
-              marginRight: 15,
-              opacity: 0.3,
-            }}
-          />
-          <View
-            style={{
-              padding: 10,
-              backgroundColor: "#F2F4F7",
-              margin: 20,
-            }}
-          >
-            <Image
               style={{
-                width: "100%",
-                height: 200,
-              }}
-              source={{ uri: `${photoDisplayURL}` }}
-            />
-          </View>
-          <View style={{ padding: 15, backgroundColor: "#F2F4F7", margin: 20 }}>
-            <Text
-              style={{
-                color: "#101828",
-                fontSize: 18,
-                fontWeight: "700",
-                marginBottom: 10,
-                alignSelf: "center",
+                marginBottom: 20,
+                marginLeft: 20,
+                marginRight: 20,
               }}
             >
-              Your Contact Info
+              {description}
             </Text>
             <Divider
               width={1.5}
               style={{
                 marginLeft: 15,
                 marginRight: 15,
+                opacity: 0.3,
               }}
             />
-            <View>
-              <View
+            <View
+              style={{
+                padding: 10,
+                backgroundColor: "#F2F4F7",
+                margin: 20,
+              }}
+            >
+              <Image
                 style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  alignItems: "center",
-                  justifyContent: "space-between",
+                  width: "100%",
+                  height: 200,
+                }}
+                source={{ uri: `${photoDisplayURL}` }}
+              />
+            </View>
+            <View
+              style={{ padding: 15, backgroundColor: "#F2F4F7", margin: 20 }}
+            >
+              <Text
+                style={{
+                  color: "#101828",
+                  fontSize: 18,
+                  fontWeight: "700",
+                  marginBottom: 10,
+                  alignSelf: "center",
                 }}
               >
-                <Text
-                  style={{
-                    color: "#101828",
-                    fontSize: 12,
-                    fontWeight: "700",
-                    marginTop: 20,
-                    marginLeft: 20,
-                  }}
-                >
-                  E-MAIL
-                </Text>
-                <Text style={{ marginTop: 20, marginRight: 20 }}>
-                  {user.username}
-                </Text>
-              </View>
-              <View
+                Your Contact Info
+              </Text>
+              <Divider
+                width={1.5}
                 style={{
-                  display: "flex",
-                  flexDirection: "row",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                  marginBottom: 20,
+                  marginLeft: 15,
+                  marginRight: 15,
                 }}
-              >
-                <Text
+              />
+              <View>
+                <View
                   style={{
-                    color: "#101828",
-                    fontSize: 12,
-                    fontWeight: "700",
-                    marginTop: 20,
-                    marginLeft: 20,
+                    display: "flex",
+                    flexDirection: "row",
+                    alignItems: "center",
+                    justifyContent: "space-between",
                   }}
                 >
-                  PHONE
-                </Text>
-                <Text style={{ marginTop: 20, marginRight: 20 }}>
-                  {user.username}
-                </Text>
+                  <Text
+                    style={{
+                      color: "#101828",
+                      fontSize: 12,
+                      fontWeight: "700",
+                      marginTop: 20,
+                      marginLeft: 20,
+                    }}
+                  >
+                    E-MAIL
+                  </Text>
+                  <Text style={{ marginTop: 20, marginRight: 20 }}>
+                    {user.username}
+                  </Text>
+                </View>
+                <View
+                  style={{
+                    display: "flex",
+                    flexDirection: "row",
+                    alignItems: "center",
+                    justifyContent: "space-between",
+                    marginBottom: 20,
+                  }}
+                >
+                  <Text
+                    style={{
+                      color: "#101828",
+                      fontSize: 12,
+                      fontWeight: "700",
+                      marginTop: 20,
+                      marginLeft: 20,
+                    }}
+                  >
+                    PHONE
+                  </Text>
+                  <Text style={{ marginTop: 20, marginRight: 20 }}>
+                    {user.username}
+                  </Text>
+                </View>
               </View>
             </View>
-          </View>
+          </>
+        </View>
+      </BottomSheet>
+
+      <BottomSheet
+        onBackdropPress={() => {
+          setIsVisible(false);
+        }}
+        isVisible={error === "Problem creation success"}
+      >
+        <View
+          style={{
+            backgroundColor: "white",
+            borderRadius: 20,
+            paddingBottom: 30,
+          }}
+        >
+          <Text>Hi</Text>
         </View>
       </BottomSheet>
     </View>
