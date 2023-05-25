@@ -2,12 +2,14 @@ import React, { useEffect, useState } from "react";
 import { AppDispatch, RootState } from "../../store";
 import { useSelector, useDispatch } from "react-redux";
 import { createProblem, fetchAllProblems } from "./problemsSlice";
-import { ProblemEntity } from "./problemsEntity";
 import { View, StyleSheet, Button, Image } from "react-native";
+import { ProblemEntity } from "./problemsEntity";
 import { Picture } from "./picture";
 import * as ImagePicker from "expo-image-picker";
 import { CameraRoll } from "@react-native-camera-roll/camera-roll";
 import { MediaType } from "expo-media-library";
+import { useQueryClient } from "@tanstack/react-query";
+import { usePostProblem } from "./promblemsHooks";
 import { TouchableOpacity, ScrollView } from "react-native-gesture-handler";
 import { Text } from "@rneui/themed";
 import { TextInput } from "react-native-paper";
@@ -16,16 +18,50 @@ export function ProblemsForm({ setProblemDepartment, problemDepartment }) {
   const problems: ProblemEntity[] = useSelector(
     (state: RootState) => state.problems.problems
   );
-  const [camera, setCamera] = useState(false);
 
-  const dispatch = useDispatch<AppDispatch>();
+  // Redux
+  /* const count = useSelector((state: RootState) => state.counter.value);
+  const problems: ProblemEntity[] = useSelector(
+    (state: RootState) => state.problems.problems
+  ); */
+
+  /* const dispatch = useDispatch<AppDispatch>(); */
+
+  /*  dispatch(
+     createProblem(new ProblemEntity(subject, description, photoToDisplay))
+   ); */
+  /* useEffect(() => {
+     dispatch(fetchAllProblems())
+   }, []); */
+
+  const [camera, setCamera] = useState(false);
   const [subject, setSubject] = useState("");
   const [description, setDescription] = useState("");
   const [photoDisplayURL, setPhotoDisplayURL] = useState("");
 
+  //React Query
+  /* const { isLoading, error, data } = useGetProblems(); */
+  const queryClient = useQueryClient();
+  const { mutate: createProblem } = usePostProblem();
+
   const handleSubmit = (event: any) => {
     event.preventDefault();
+    console.log(`subject: ${subject}, description: ${description}`);
     const createdAt = new Date();
+    const problemEntity: ProblemEntity = new ProblemEntity(
+      problemDepartment,
+      subject,
+      description,
+      photoDisplayURL,
+      createdAt
+    );
+    createProblem(problemEntity, {
+      onSuccess: () =>
+        queryClient.invalidateQueries({ queryKey: ["problems"] }),
+    });
+  };
+
+  /* const createdAt = new Date();
 
     dispatch(
       createProblem(
@@ -43,7 +79,7 @@ export function ProblemsForm({ setProblemDepartment, problemDepartment }) {
   useEffect(() => {
     console.log("here", photoDisplayURL);
   }, []);
-
+ */
   return (
     <View
       style={{

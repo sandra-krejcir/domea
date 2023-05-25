@@ -16,6 +16,7 @@ import {
   DrawerItemList,
 } from "@react-navigation/drawer";
 import * as SecureStore from "expo-secure-store";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { Categories } from "./components/problems/problemCategories";
 import { ResidentService } from "./components/problems/residentService";
 import { Text } from "@rneui/themed";
@@ -25,6 +26,7 @@ const Stack = createNativeStackNavigator();
 
 const LeftDrawer = createDrawerNavigator();
 
+const queryClient = new QueryClient();
 const CustomHeader = (props: any) => {
   return (
     <DrawerContentScrollView {...props}>
@@ -103,6 +105,7 @@ export default function App() {
 	SecureStore.setItemAsync("token", "");
   return (
     <NavigationContainer>
+      <QueryClientProvider client={queryClient}>
       <Provider store={store}>
         <View style={styles.container}>
           <Stack.Navigator>
@@ -124,6 +127,7 @@ export default function App() {
           </Stack.Navigator>
         </View>
       </Provider>
+      </QueryClientProvider>
     </NavigationContainer>
   );
 }
