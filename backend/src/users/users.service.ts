@@ -54,12 +54,12 @@ export class UsersService {
     password: string,
     firstname: string,
     lastname: string,
-    birthday: Date,
+    phone: string,
   ): Promise<TenantEntity> {
     const user: User = { username, password, role: Role.User };
 
     const savedUser = await this.userRepository.save(user);
-    const tenant = { firstname, lastname, birthday, user: savedUser };
+    const tenant = { firstname, lastname, phone, user: savedUser };
     const savedTenant = await this.tenantRepository.save(tenant);
 
     return savedTenant;

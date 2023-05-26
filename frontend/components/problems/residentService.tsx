@@ -9,13 +9,7 @@ import { Categories } from "./problemCategories";
 import { ProblemsForm } from "./problemForm";
 
 export function ResidentService() {
-  const dispatch = useDispatch<AppDispatch>();
-  const user = useSelector((state: RootState) => state.users.user);
   const [problemDepartment, setProblemDepartment] = useState("");
-
-  useEffect(() => {
-    dispatch(findOne());
-  }, []);
 
   return (
     <>
@@ -23,10 +17,9 @@ export function ResidentService() {
         <ProblemsForm
           setProblemDepartment={setProblemDepartment}
           problemDepartment={problemDepartment}
-          user={user}
         />
       ) : (
-        <Categories user={user} setProblemDepartment={setProblemDepartment} />
+        <Categories setProblemDepartment={setProblemDepartment} />
       )}
     </>
   );

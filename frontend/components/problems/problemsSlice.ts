@@ -55,7 +55,6 @@ const problemsSlice = createSlice({
     });
     builder.addCase(createProblem.fulfilled, (state, action) => {
       // Add user to the state array
-      console.log("hi", action);
       state.problems.push(action.payload);
     });
     builder.addCase(deleteProblem.fulfilled, (state, action) => {

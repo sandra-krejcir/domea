@@ -24,6 +24,9 @@ export class TenantEntity {
   @Column()
   lastname: string;
 
+  @Column()
+  phone: string;
+
   @OneToMany(() => Problem, (problem) => problem.tenant)
   problem: Problem;
 }
