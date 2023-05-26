@@ -358,7 +358,40 @@ export function FrontpageAdmin() {
         </TabView.Item> */}
         <TabView.Item style={{ width: "100%" }}>
           <View>
-            <Text>Hi text</Text>
+            <View style={styles.bottomContactIconContainer}>
+              <View style={styles.contactBubble}>
+                <Image source={require("../../assets/contact.png")}></Image>
+                <Text style={styles.contactBubbleText}>+45 54 63 21</Text>
+              </View>
+            </View>
+            <View style={styles.bottomContactIconContainer}>
+              <View style={styles.contactBubble}>
+                <Image source={require("../../assets/email.png")}></Image>
+                <Text style={styles.contactBubbleText}>contact@domea.com</Text>
+              </View>
+            </View>
+            <View>
+              <View
+                style={{
+                  display: "flex",
+                  backgroundColor: "#E4E7EC",
+                  borderRadius: 10,
+                  width: "auto",
+                  marginTop: 5,
+                  marginLeft: 15,
+                  marginRight: 15,
+                }}
+              >
+                <View style={styles.openingHoursContainer}>
+                  <Text>Mon-Fri:</Text>
+                  <Text>08:00 - 16:00</Text>
+                </View>
+                <View style={styles.openingHoursContainer}>
+                  <Text>Sat-Sun:</Text>
+                  <Text>11:00 - 16:00</Text>
+                </View>
+              </View>
+            </View>
           </View>
         </TabView.Item>
       </TabView>
@@ -550,6 +583,13 @@ const styles = StyleSheet.create({
     width: 30,
     height: 30,
   },
+  contactImage: {
+    flex: 1,
+    marginLeft: 10,
+    marginRight: 10,
+    width: 10,
+    height: 10,
+  },
   iconContainer: {
     display: "flex",
     width: 190,
@@ -558,12 +598,42 @@ const styles = StyleSheet.create({
     borderRadius: 10,
     backgroundColor: "#101828",
   },
+  bottomContactIconContainer: {
+    display: "flex",
+    width: "auto",
+    marginTop: 3,
+    marginBottom: 3,
+    marginLeft: 10,
+    marginRight: 15,
+    borderRadius: 15,
+    backgroundColor: "#101828",
+  },
   contactButton: {
     display: "flex",
     alignItems: "center",
   },
   contactButtonText: {
-    paddingBottom: 10,
     color: "white",
+  },
+
+  contactBubble: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "flex-start",
+    marginLeft: 15,
+    marginBottom: 5,
+    marginTop: 5,
+    padding: 5,
+  },
+  contactBubbleText: {
+    color: "white",
+    marginLeft: 30,
+  },
+
+  openingHoursContainer: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+    padding: 10,
   },
 });
