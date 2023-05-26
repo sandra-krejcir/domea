@@ -40,30 +40,6 @@ export function Picture(props) {
     );
   }
 
-  /* const uploadImage = async (newPhoto) => {
-    const fileToUpload = newPhoto.base64;
-    const data = {};
-    data.photo = fileToUpload;
-    try {
-      // get ip on mac: ipconfig getifaddr en0
-      console.log("fetch", data);
-      let res = await fetch(
-        "https://3f14-5-179-80-205.eu.ngrok.io/problems/image",
-        {
-          method: "POST",
-          body: data,
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
-      let responseJson = await res.json();
-      console.log(responseJson);
-    } catch (error) {
-      // console.log("error", error)
-    }
-  }; */
-
   let takePic = async () => {
     let options = {
       quality: 0.1,
@@ -91,15 +67,11 @@ export function Picture(props) {
           body: formData,
         }
       );
-      /* console.log("the response", res); */
       let responseJson = await res.json();
-      console.log("json response", responseJson);
       props
         .setPhotoDisplayURL(responseJson.image.display_url)
         .then(() => console.log("done"));
-    } catch (error) {
-      // console.log("error", error)
-    }
+    } catch (error) {}
   };
 
   if (photo) {

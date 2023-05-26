@@ -26,7 +26,6 @@ export function TenantFormAdmin() {
       )
     );
     setErrorMsg(feedback);
-    console.log("err", feedback);
     setUsername("");
     setPassword("");
     setFirstname("");

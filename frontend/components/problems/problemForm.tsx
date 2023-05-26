@@ -53,9 +53,6 @@ export function ProblemsForm({ setProblemDepartment, problemDepartment }) {
   const [photoDisplayURL, setPhotoDisplayURL] = useState("");
   const [isVisible, setIsVisible] = useState(false);
   const [error, setError] = useState("");
-
-  //React Query
-  /* const { isLoading, error, data } = useGetProblems(); */
   const queryClient = useQueryClient();
   const { mutate: createProblem } = usePostProblem();
 

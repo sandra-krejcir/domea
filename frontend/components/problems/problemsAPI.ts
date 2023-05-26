@@ -6,9 +6,7 @@ import * as SecureStore from "expo-secure-store";
 
 export class ProblemsAPI {
   static async create(problem: ProblemEntity) {
-    console.log("sending data");
     try {
-      console.log("sending data", problem);
       const token = await SecureStore.getItemAsync("token");
       const headers = {
         Authorization: `Bearer ${token}`,

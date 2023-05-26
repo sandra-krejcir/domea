@@ -14,7 +14,6 @@ export const fetchAllProblems = createAsyncThunk(
 export const createProblem = createAsyncThunk(
   "problems/create", // This is a name for the thunk (must be unique) not the endpoint
   async (problem: ProblemEntity, thunkAPI) => {
-    console.log("hi thunk");
     const response = ProblemsAPI.create(problem);
 
     return response;
@@ -23,7 +22,6 @@ export const createProblem = createAsyncThunk(
 export const deleteProblem = createAsyncThunk(
   "problems/", // This is a name for the thunk (must be unique) not the endpoint
   async (id: number, thunkAPI) => {
-    console.log("hi thunk");
     const response = ProblemsAPI.delete(id);
 
     return response;
@@ -66,6 +64,3 @@ const problemsSlice = createSlice({
 // Action creators are generated for each case reducer function
 
 export default problemsSlice.reducer;
-
-// Later, dispatch the thunk as needed in the app
-// dispatch(fetchUserById(123))

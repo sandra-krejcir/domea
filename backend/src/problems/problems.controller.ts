@@ -41,7 +41,6 @@ export class ProblemsController {
       await this.usersService.findOne(req.user.username)
     ).tenant; // Hardcode TEST TEST TEST
 
-    console.log(createProblemDto);
     return this.problemsService.create(createProblemDto);
   }
 
@@ -57,11 +56,6 @@ export class ProblemsController {
   findOne(@Param('id') id: string) {
     return this.problemsService.findOne(+id);
   }
-
-  // @Patch(':id')
-  // update(@Param('id') id: string, @Body() updateProblemDto: UpdateProblemDto) {
-  //   return this.problemsService.update(+id, updateProblemDto);
-  // }
 
   @Delete(':id')
   remove(@Param('id') id: string) {

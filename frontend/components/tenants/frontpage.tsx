@@ -27,8 +27,6 @@ export function FrontpageTenant(navigation) {
     const asyncFunc = async () => {
       const token = await SecureStore.getItemAsync("token");
       dispatch(updateToken(token));
-
-      console.log("token is", token);
     };
     asyncFunc();
   }, []);
@@ -45,15 +43,6 @@ export function FrontpageTenant(navigation) {
   return (
     <View style={{ backgroundColor: "white" }}>
       <ScrollView>
-        {/* <View style={styles.searchBar}>
-        <TextInput
-          style={styles.searchInput}
-          placeholder="Søg efter dokumenter, artikler m.m"
-          placeholderTextColor="#1A1B22"
-        ></TextInput>
-        <Image source={require("../../assets/search.png")}></Image>
-      </View>
-      */}
         <View style={styles.mainContainer}>
           <View style={{ marginBottom: 10 }}>
             <Text h4 style={[styles.title, { marginBottom: 5 }]}>
@@ -140,19 +129,6 @@ export function FrontpageTenant(navigation) {
   );
 }
 const styles = StyleSheet.create({
-  /* searchInput: {
-    height: 50,
-    margin: 12,
-    borderWidth: 1,
-    padding: 10,
-    borderRadius: 25,
-    borderColor: "lightgrey",
-    backgroundColor: "#F3F3F3",
-  },
-  searchBar: {
-    flex: 1,
-    flexDirection: "row",
-  }, */
   text: {
     fontSize: 25,
     fontWeight: "500",

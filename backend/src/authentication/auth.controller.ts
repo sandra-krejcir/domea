@@ -11,7 +11,6 @@ import { JwtAuthGuard } from './guards/jwt-auth.guard';
 import { LocalAuthGuard } from './guards/local-auth.guard';
 import { AdminGuard } from './guards/admin.guard';
 import { TenantGuard } from './guards/tenant.guard';
-/* import { SuperAdminGuard } from './super-admin.guard'; */
 
 @Controller()
 export class AuthController {
@@ -38,7 +37,6 @@ export class AuthController {
     return this.authService.signup_tenant(req.body);
   }
 
-  /*   @UseGuards(JwtAuthGuard, SuperAdminGuard) */
   @Post('auth/signup-board_member')
   async signup_board_member(@Request2() req) {
     console.log('body', req.body);
@@ -49,7 +47,6 @@ export class AuthController {
   @UseGuards(JwtAuthGuard, TenantGuard)
   @Post('getUser')
   async findOne(@Req() req) {
-    console.log('user hi');
     const result = await this.authService.findOne(req.user.username);
     console.log('controller result', result);
     return result;
@@ -57,7 +54,6 @@ export class AuthController {
 
   @Get('admins')
   async findAdmins(@Req() req) {
-    console.log('admin hi');
     const result = await this.authService.findAdmins();
     console.log('controller result admin', result);
     return result;

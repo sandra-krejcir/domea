@@ -397,8 +397,6 @@ export function FrontpageAdmin() {
           admins.length > 0 &&
           admins.map((admin: any) => {
             if (admin.id === chosenAdmin) {
-              console.log("the one", admin);
-
               return (
                 <View
                   style={{

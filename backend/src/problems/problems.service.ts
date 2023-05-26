@@ -25,10 +25,6 @@ export class ProblemsService {
     return this.problemRepository.findOneBy({ id: id });
   }
 
-  // update(id: number, updateProblemDto: UpdateProblemDto) {
-  //   return `This action updates a #${id} problem`;
-  // }
-
   remove(id: number) {
     return this.problemRepository.delete(id);
   }

@@ -22,7 +22,6 @@ export const usePostProblem = () => {
       const headers = {
         Authorization: `Bearer ${token}`,
       };
-      console.log(token);
       return await axios.post(BASE_URL + "/problems", newProblem, {
         headers,
       });

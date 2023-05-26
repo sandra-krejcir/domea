@@ -87,7 +87,6 @@ export class UsersService {
     const user: User = { username, password, role: Role.Admin };
 
     boardMemberDto.user = await this.userRepository.save(user);
-    /*  const boardMember = { phone, address, zipCode, city, user: savedUser }; */
     const savedBoardMember = await this.boardMemberRepository.save(
       boardMemberDto,
     );

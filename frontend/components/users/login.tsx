@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { AppDispatch, RootState } from "../../store";
 import { useSelector, useDispatch } from "react-redux";
 import { View, Image, StyleSheet } from "react-native";
-import { Text } from '@rneui/themed';
+import { Text } from "@rneui/themed";
 import { TextInput } from "react-native-paper";
 import { login, signup, updateRole, updateToken } from "./usersSlice";
 import { UsersEntity } from "./usersEntity";
@@ -33,9 +33,7 @@ export function Login({ navigation }) {
       const token = await SecureStore.getItemAsync("token");
       const role = await SecureStore.getItemAsync("role");
 
-      console.log("login");
       if (role === "admin") {
-        console.log("1", role);
         navigation.navigate("FrontpageAdmin");
       } else if (role === "user") {
         navigation.navigate("FrontpageTenant");
@@ -46,94 +44,99 @@ export function Login({ navigation }) {
 
   return (
     <View style={styles.container}>
-		<Image
+      <Image
         style={styles.image}
-        source={require('../../assets/green-gradient.png')}
+        source={require("../../assets/green-gradient.png")}
       />
-      <Text h1 h1Style={styles.h1}>Login</Text>
-	  <Text style={styles.text}>Welcome back! Please enter your details.</Text>
-	  <View style={styles.form}>
-		<TextInput
-		onChangeText={setUsername}
-		value={username}
-		label="Username *"
-		mode="outlined"
-		outlineColor="#D0D5DD"
-		outlineStyle={{ borderWidth: 2 }}
-		activeOutlineColor="#A5ED7B"
-		selectionColor="black"
-		textColor="black"
-		style={styles.input}
-		/>
-		<TextInput
-		onChangeText={setPassword}
-		value={password}
-		label="Password *"
-		mode="outlined"
-		outlineColor="#D0D5DD"
-		outlineStyle={{ borderWidth: 2 }}
-		activeOutlineColor="#A5ED7B"
-		selectionColor="black"
-		textColor="black"
-		style={styles.input}
-		/>
-		<TouchableOpacity style={styles.button} onPress={() => handleLoginSuccess()}>
-			<Text style={styles.buttontext}>{"Login"}</Text>
-		</TouchableOpacity>
-		</View>
+      <Text h1 h1Style={styles.h1}>
+        Login
+      </Text>
+      <Text style={styles.text}>Welcome back! Please enter your details.</Text>
+      <View style={styles.form}>
+        <TextInput
+          onChangeText={setUsername}
+          value={username}
+          label="Username *"
+          mode="outlined"
+          outlineColor="#D0D5DD"
+          outlineStyle={{ borderWidth: 2 }}
+          activeOutlineColor="#A5ED7B"
+          selectionColor="black"
+          textColor="black"
+          style={styles.input}
+        />
+        <TextInput
+          onChangeText={setPassword}
+          value={password}
+          label="Password *"
+          mode="outlined"
+          outlineColor="#D0D5DD"
+          outlineStyle={{ borderWidth: 2 }}
+          activeOutlineColor="#A5ED7B"
+          selectionColor="black"
+          textColor="black"
+          style={styles.input}
+        />
+        <TouchableOpacity
+          style={styles.button}
+          onPress={() => handleLoginSuccess()}
+        >
+          <Text style={styles.buttontext}>{"Login"}</Text>
+        </TouchableOpacity>
+      </View>
     </View>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
-	backgroundColor: 'white',
-	height: '100%',
+    backgroundColor: "white",
+    height: "100%",
     flex: 1,
-	paddingTop: 95,
+    paddingTop: 95,
     paddingHorizontal: 20,
   },
   image: {
-    position: 'absolute',
-	right: 0,
-	bottom: 0,
+    position: "absolute",
+    right: 0,
+    bottom: 0,
   },
   h1: {
-	color: '#101828',
+    color: "#101828",
     fontSize: 24,
     lineHeight: 32,
-    fontWeight: '600',
+    fontWeight: "600",
     marginBottom: 8,
   },
   text: {
-	color: '#667085',
+    color: "#667085",
     fontSize: 16,
     lineHeight: 24,
-    fontWeight: '500',
+    fontWeight: "500",
     marginBottom: 32,
   },
   form: {
     flex: 1,
-	gap: 20,
+    gap: 20,
   },
   input: {
-	backgroundColor: "white",
-	color: "black",
+    backgroundColor: "white",
+    color: "black",
   },
   button: {
-	backgroundColor: '#101828',
+    backgroundColor: "#101828",
     marginTop: 22,
-    alignItems: 'center',
-    justifyContent: 'center',
+    alignItems: "center",
+    justifyContent: "center",
     paddingVertical: 12,
     paddingHorizontal: 32,
     borderRadius: 4,
   },
   buttontext: {
-	color: 'white',
+    color: "white",
     fontSize: 14,
     lineHeight: 26,
-    fontWeight: '700',
-	textTransform: 'uppercase',
+    fontWeight: "700",
+    textTransform: "uppercase",
   },
 });

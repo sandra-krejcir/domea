@@ -39,20 +39,9 @@ export class UsersAPI {
   }
 
   static async login(user: UsersEntity) {
-    // try {
     const result = await axios.post(BASE_URL + "/auth/login", user);
 
     return result.data;
-    // }
-    // catch(error: any) {
-    //     // console.log("error", error.response.data);
-    //     // console.log("error", error.response.status);
-    //     // console.log("error", error.response.headers);
-
-    //     if (error.response.status === 401) {
-
-    //     }
-    // }
   }
 
   static async create(tenant: TenantEntity) {
@@ -61,9 +50,13 @@ export class UsersAPI {
       const headers = {
         Authorization: `Bearer ${token}`,
       };
-      const result = await axios.post(BASE_URL + "/auth/signup-tenant", tenant, {
-        headers,
-      });
+      const result = await axios.post(
+        BASE_URL + "/auth/signup-tenant",
+        tenant,
+        {
+          headers,
+        }
+      );
 
       return result.data;
     } catch (error) {}

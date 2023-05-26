@@ -1,10 +1,7 @@
 import React from "react";
-import { StatusBar } from "expo-status-bar";
 import { StyleSheet, View, Image } from "react-native";
 import { Provider } from "react-redux";
-import { ProblemsForm } from "./components/problems/problemForm";
 import { Login } from "./components/users/login";
-/* import { Signup } from "./features/users/signup"; */
 import { store } from "./store";
 import { NavigationContainer } from "@react-navigation/native";
 import { createNativeStackNavigator } from "@react-navigation/native-stack";
@@ -17,7 +14,6 @@ import {
 } from "@react-navigation/drawer";
 import * as SecureStore from "expo-secure-store";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import { Categories } from "./components/problems/problemCategories";
 import { ResidentService } from "./components/problems/residentService";
 import { Text } from "@rneui/themed";
 import { TenantFormAdmin } from "./components/admins/tenantForm";

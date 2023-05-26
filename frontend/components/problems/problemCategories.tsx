@@ -128,12 +128,6 @@ export function Categories({ setProblemDepartment }) {
                   </TouchableOpacity>
                 ))}
               </View>
-              {/*  {user.tenant.problem.map((problem: any) => (
-                <>
-                  <Text>{problem.subject}</Text>
-                  <Text>{problem.description}</Text>
-                </>
-              ))} */}
             </View>
           </TabView.Item>
           <TabView.Item style={{ width: "100%" }}>
