@@ -134,7 +134,7 @@ const usersSlice = createSlice({
     });
     builder.addCase(findAdmins.rejected, (state, action) => {
       if (action.error.message === "Request failed with status code 401") {
-        state.error = "Invalid user";
+        state.error = action.payload as string;
         state.admins = undefined;
       }
 
@@ -146,7 +146,7 @@ const usersSlice = createSlice({
     });
     builder.addCase(createTenant.rejected, (state, action) => {
       if (action.error.message === "Request failed with status code 401") {
-        state.error = "Invalid user";
+        state.error = action.payload as string;
       }
 
       console.log("error in user slice", action.error);

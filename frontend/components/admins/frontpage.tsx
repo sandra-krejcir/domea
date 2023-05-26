@@ -13,7 +13,7 @@ import {
 import { findAdmins, login, signup, updateToken } from "../users/usersSlice";
 import { UsersEntity } from "../users/usersEntity";
 import * as SecureStore from "expo-secure-store";
-import { Tab, Text, TabView, Divider, BottomSheet } from "@rneui/themed";
+import { Tab, Text, TabView, Divider, BottomSheet, Icon } from "@rneui/themed";
 import { ScrollView } from "react-native-gesture-handler";
 
 export function FrontpageAdmin() {
@@ -27,7 +27,7 @@ export function FrontpageAdmin() {
   );
   let admins: any = [];
 
-  if (fetchedAdmins) {
+  /* if (fetchedAdmins) {
     console.log("This shit", fetchedAdmins);
     fetchedAdmins.map((admin: any) => {
       if (admin.id !== userId) {
@@ -39,7 +39,7 @@ export function FrontpageAdmin() {
 
   useEffect(() => {
     dispatch(findAdmins());
-  }, []);
+  }, []); */
   const complex = {
     complexName: "20-1 : Vejgårdspark",
     complexAddress: "Vejgårdspark 1-153, 2-126",
@@ -253,6 +253,11 @@ export function FrontpageAdmin() {
         containerStyle={{ marginTop: 5 }}
       >
         <TabView.Item style={{ width: "100%" }}>
+          <View>
+            <Text>not this one</Text>
+          </View>
+        </TabView.Item>
+        {/* <TabView.Item style={{ width: "100%" }}>
           <ScrollView>
             <View style={{ marginBottom: 150 }}>
               <View>
@@ -350,29 +355,157 @@ export function FrontpageAdmin() {
               </View>
             </View>
           </ScrollView>
+        </TabView.Item> */}
+        <TabView.Item style={{ width: "100%" }}>
+          <View>
+            <Text>Hi text</Text>
+          </View>
         </TabView.Item>
-        <TabView.Item style={{ width: "100%" }}></TabView.Item>
       </TabView>
-      <BottomSheet isVisible={isVisible}>
+      {/* <BottomSheet
+        onBackdropPress={() => setIsVisible(false)}
+        isVisible={isVisible}
+      >
         {admins &&
           admins.map((admin: any) => {
             if (admin.id === chosenAdmin) {
               console.log("the one", admin);
+
               return (
-                <View style={{ height: 300, backgroundColor: "white" }}>
-                  <Text>{admin.boardMember.firstname}</Text>
-                  <Button
-                    title="Close"
-                    onPress={() => {
-                      setIsVisible(false);
-                      setChosenAdmin(0);
+                <View style={{ height: "100%", backgroundColor: "white" }}>
+                  <View
+                    style={{
+                      display: "flex",
+                      flexDirection: "row",
+                      justifyContent: "space-between",
                     }}
-                  />
+                  >
+                    <View></View>
+                    <View
+                      style={{
+                        display: "flex",
+                        justifyContent: "center",
+                      }}
+                    >
+                      <Text
+                        style={{
+                          fontWeight: "bold",
+                          marginTop: 10,
+                          marginBottom: 10,
+                          marginLeft: 50,
+                        }}
+                      >
+                        Contact information
+                      </Text>
+                    </View>
+                    <TouchableOpacity
+                      style={{
+                        display: "flex",
+                        justifyContent: "flex-end",
+                      }}
+                      onPress={() => setIsVisible(false)}
+                    >
+                      <Text
+                        style={{
+                          fontWeight: "bold",
+                          marginTop: 10,
+                          marginBottom: 10,
+                          marginRight: 10,
+                        }}
+                      >
+                        Close
+                      </Text>
+                    </TouchableOpacity>
+                  </View>
+                  <Divider width={1} color="#D0D5DD" />
+                  <View
+                    style={{
+                      display: "flex",
+                      alignItems: "center",
+                    }}
+                  >
+                    <View
+                      style={{
+                        display: "flex",
+                        backgroundColor: "white",
+                        alignItems: "center",
+                      }}
+                    >
+                      <Image
+                        style={styles.adminImage}
+                        source={require("../../assets/adminIcon.png")}
+                      ></Image>
+                    </View>
+                    <Text
+                      style={{
+                        fontWeight: "bold",
+                        marginBottom: 10,
+                      }}
+                    >
+                      {admin.boardMember.firstname} {admin.boardMember.lastname}
+                    </Text>
+                  </View>
+                  <View
+                    style={{
+                      display: "flex",
+                      flexDirection: "row",
+                      justifyContent: "center",
+                      gap: 10,
+                    }}
+                  >
+                    <View style={styles.iconContainer}>
+                      <View style={styles.contactButton}>
+                        <Image
+                          style={styles.image}
+                          source={require("../../assets/contact.png")}
+                        ></Image>
+                        <Text style={styles.contactButtonText}>Ring op</Text>
+                      </View>
+                    </View>
+                    <View style={styles.iconContainer}>
+                      <View style={styles.contactButton}>
+                        <Image
+                          style={styles.image}
+                          source={require("../../assets/email.png")}
+                        ></Image>
+                        <Text style={styles.contactButtonText}>Send mail</Text>
+                      </View>
+                    </View>
+                  </View>
+                  <View style={{ marginBottom: 70 }}>
+                    <View style={styles.mainContainer}>
+                      <View style={styles.container}>
+                        <View style={{}}>
+                          <Text style={{ color: "#667085" }}>Phone number</Text>
+                          <Text style={{}}>{admin.boardMember.phone}</Text>
+                        </View>
+                      </View>
+                    </View>
+                    <View style={styles.mainContainer}>
+                      <View style={styles.container}>
+                        <View style={{}}>
+                          <Text style={{ color: "#667085" }}>E-mail</Text>
+                          <Text style={{}}>{admin.username}</Text>
+                        </View>
+                      </View>
+                    </View>
+                    <View style={styles.mainContainer}>
+                      <View style={styles.container}>
+                        <View style={{}}>
+                          <Text style={{ color: "#667085" }}>Adresse</Text>
+                          <Text style={{}}>
+                            {admin.boardMember.address}{" "}
+                            {admin.boardMember.zipCode} {admin.boardMember.city}
+                          </Text>
+                        </View>
+                      </View>
+                    </View>
+                  </View>
                 </View>
               );
             }
           })}
-      </BottomSheet>
+      </BottomSheet> */}
     </View>
   );
 }
@@ -383,5 +516,54 @@ const styles = StyleSheet.create({
     margin: 12,
     borderWidth: 1,
     padding: 10,
+  },
+  topBar: {
+    display: "flex",
+    flexDirection: "row",
+  },
+  mainContainer: {
+    flex: 1,
+    flexDirection: "column",
+    margin: 5,
+    marginLeft: 15,
+    marginRight: 15,
+
+    paddingLeft: 5,
+    paddingRight: 5,
+    justifyContent: "space-evenly",
+    borderRadius: 10,
+  },
+  container: {
+    flex: 1,
+    padding: 10,
+    borderRadius: 10,
+    backgroundColor: "#E4E7EC",
+  },
+  adminImage: {
+    margin: 15,
+    width: 100,
+    height: 100,
+  },
+  image: {
+    flex: 1,
+    margin: 10,
+    width: 30,
+    height: 30,
+  },
+  iconContainer: {
+    display: "flex",
+    width: 190,
+    marginTop: 10,
+    marginBottom: 5,
+    borderRadius: 10,
+    backgroundColor: "#101828",
+  },
+  contactButton: {
+    display: "flex",
+    alignItems: "center",
+  },
+  contactButtonText: {
+    paddingBottom: 10,
+    color: "white",
   },
 });
