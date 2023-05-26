@@ -2,6 +2,14 @@ To run the project, first open the terminal and make sure you are in the main fo
 
 To install all the needed dependencies move first to the frontend folder (cd frontend), and run 'npm install' in the terminal. After the installing is done, move back to the main folder, .. cd, and the move down to backend folder, cd backend and run the same command (npm install).
 
+Before startig up the backend, create an .env file in the root folder (backend), and set up the parameters for your database (our database is hosted by pgAdmin4, and if you're using the same, you will only need to change the master password):
+
+DB_HOST='localhost'
+DB_PORT=5432
+DB_USERNAME='postgres'
+DB_PASSWORD='**\*\*\***'
+DB_NAME='domea'
+
 Open 2 terminals. Make sure one is in the frontend folder and run 'npm run expo start', while the other should be in the backend folder and run 'npm run start:dev'.
 
 _IMPORTANT_ In order to make the connection between the frontend and backend work, install ngrok, open the ngrok terminal, run 'ngrok.exe http 3005' and copy the link marked as 'forwarding' into the frontend .env file.
