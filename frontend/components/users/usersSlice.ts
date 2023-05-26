@@ -86,6 +86,7 @@ const usersSlice = createSlice({
       state.role = action.payload;
       console.log("updated role");
     },
+
     // standard reducer logic, with auto-generated action types per reducer
   },
   extraReducers: (builder) => {

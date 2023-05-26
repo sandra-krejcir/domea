@@ -113,17 +113,43 @@ export function Picture(props) {
 
     return (
       <SafeAreaView style={styles.container}>
-        {hasMediaLibraryPermission ? (
-          <Button title="Save" onPress={savePhoto} />
-        ) : undefined}
-        <Button title="Discard" onPress={() => setPhoto(undefined)} />
+        <View style={[styles.buttonContainer, { bottom: 400 }]}>
+          <TouchableOpacity
+            style={{
+              backgroundColor: "#F2F4F7",
+              color: "#1A1B22",
+              paddingTop: 10,
+              paddingBottom: 10,
+              paddingLeft: 15,
+              paddingRight: 15,
+              borderRadius: 5,
+            }}
+            onPress={() => setPhoto(undefined)}
+          >
+            <Text style={{ fontSize: 16, fontWeight: "500" }}>Discard</Text>
+          </TouchableOpacity>
+
+          {hasMediaLibraryPermission ? (
+            <TouchableOpacity
+              style={{
+                backgroundColor: "#A5ED7B",
+                color: "#1A1B22",
+                padding: 10,
+                borderRadius: 5,
+              }}
+              onPress={() => savePhoto()}
+            >
+              <Text style={{ fontSize: 16, fontWeight: "500" }}>Save</Text>
+            </TouchableOpacity>
+          ) : undefined}
+        </View>
       </SafeAreaView>
     );
   }
 
   return (
     <Camera style={styles.container} ref={cameraRef}>
-      <View style={styles.buttonContainer}>
+      <View style={[styles.buttonContainer, { bottom: 10 }]}>
         <TouchableOpacity
           style={{
             backgroundColor: "#F2F4F7",
@@ -159,10 +185,10 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
+    backgroundColor: "#101828",
   },
   buttonContainer: {
     position: "absolute",
-    bottom: 10,
     display: "flex",
     flexDirection: "row",
     gap: 50,

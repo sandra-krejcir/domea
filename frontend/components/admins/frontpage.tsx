@@ -27,19 +27,17 @@ export function FrontpageAdmin() {
   );
   let admins: any = [];
 
-  /* if (fetchedAdmins) {
-    console.log("This shit", fetchedAdmins);
+  if (fetchedAdmins && fetchedAdmins.length > 0) {
     fetchedAdmins.map((admin: any) => {
       if (admin.id !== userId) {
         admins.push(admin);
       }
     });
-    console.log("the ad", admins);
   }
 
   useEffect(() => {
     dispatch(findAdmins());
-  }, []); */
+  }, []);
   const complex = {
     complexName: "20-1 : Vejgårdspark",
     complexAddress: "Vejgårdspark 1-153, 2-126",
@@ -253,16 +251,12 @@ export function FrontpageAdmin() {
         containerStyle={{ marginTop: 5 }}
       >
         <TabView.Item style={{ width: "100%" }}>
-          <View>
-            <Text>not this one</Text>
-          </View>
-        </TabView.Item>
-        {/* <TabView.Item style={{ width: "100%" }}>
           <ScrollView>
             <View style={{ marginBottom: 150 }}>
               <View>
                 {fetchedAdmins &&
                   admins &&
+                  admins.length > 0 &&
                   admins.map((admin: any) => (
                     <View
                       style={{
@@ -355,7 +349,7 @@ export function FrontpageAdmin() {
               </View>
             </View>
           </ScrollView>
-        </TabView.Item> */}
+        </TabView.Item>
         <TabView.Item style={{ width: "100%" }}>
           <View>
             <View style={styles.bottomContactIconContainer}>
@@ -395,22 +389,31 @@ export function FrontpageAdmin() {
           </View>
         </TabView.Item>
       </TabView>
-      {/* <BottomSheet
+      <BottomSheet
         onBackdropPress={() => setIsVisible(false)}
         isVisible={isVisible}
       >
         {admins &&
+          admins.length > 0 &&
           admins.map((admin: any) => {
             if (admin.id === chosenAdmin) {
               console.log("the one", admin);
 
               return (
-                <View style={{ height: "100%", backgroundColor: "white" }}>
+                <View
+                  style={{
+                    height: "100%",
+                    backgroundColor: "white",
+                    borderRadius: 20,
+                  }}
+                >
                   <View
                     style={{
                       display: "flex",
                       flexDirection: "row",
                       justifyContent: "space-between",
+                      marginTop: 15,
+                      marginBottom: 15,
                     }}
                   >
                     <View></View>
@@ -426,6 +429,7 @@ export function FrontpageAdmin() {
                           marginTop: 10,
                           marginBottom: 10,
                           marginLeft: 50,
+                          fontSize: 18,
                         }}
                       >
                         Contact information
@@ -472,7 +476,7 @@ export function FrontpageAdmin() {
                     <Text
                       style={{
                         fontWeight: "bold",
-                        marginBottom: 10,
+                        marginBottom: 20,
                       }}
                     >
                       {admin.boardMember.firstname} {admin.boardMember.lastname}
@@ -483,6 +487,9 @@ export function FrontpageAdmin() {
                       display: "flex",
                       flexDirection: "row",
                       justifyContent: "center",
+                      alignItems: "center",
+                      marginLeft: 20,
+                      marginRight: 20,
                       gap: 10,
                     }}
                   >
@@ -492,7 +499,7 @@ export function FrontpageAdmin() {
                           style={styles.image}
                           source={require("../../assets/contact.png")}
                         ></Image>
-                        <Text style={styles.contactButtonText}>Ring op</Text>
+                        <Text style={styles.contactButtonText}>Call</Text>
                       </View>
                     </View>
                     <View style={styles.iconContainer}>
@@ -525,7 +532,7 @@ export function FrontpageAdmin() {
                     <View style={styles.mainContainer}>
                       <View style={styles.container}>
                         <View style={{}}>
-                          <Text style={{ color: "#667085" }}>Adresse</Text>
+                          <Text style={{ color: "#667085" }}>Address</Text>
                           <Text style={{}}>
                             {admin.boardMember.address}{" "}
                             {admin.boardMember.zipCode} {admin.boardMember.city}
@@ -538,7 +545,7 @@ export function FrontpageAdmin() {
               );
             }
           })}
-      </BottomSheet> */}
+      </BottomSheet>
     </View>
   );
 }
@@ -558,9 +565,8 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: "column",
     margin: 5,
-    marginLeft: 15,
-    marginRight: 15,
-
+    marginLeft: 10,
+    marginRight: 10,
     paddingLeft: 5,
     paddingRight: 5,
     justifyContent: "space-evenly",
@@ -592,7 +598,7 @@ const styles = StyleSheet.create({
   },
   iconContainer: {
     display: "flex",
-    width: 190,
+    width: "50%",
     marginTop: 10,
     marginBottom: 5,
     borderRadius: 10,
@@ -614,6 +620,7 @@ const styles = StyleSheet.create({
   },
   contactButtonText: {
     color: "white",
+    paddingBottom: 5,
   },
 
   contactBubble: {
