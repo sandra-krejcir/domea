@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { AppDispatch, RootState } from "../../store";
 import { useSelector, useDispatch } from "react-redux";
-import { View, Text, TextInput, StyleSheet, Button, ScrollView, Image, TouchableOpacity } from "react-native";
-import { login, signup, updateToken } from "../users/usersSlice";
+import { View, StyleSheet, Image } from "react-native";
+import { findOne, login, signup, updateToken } from "../users/usersSlice";
 import { UsersEntity } from "../users/usersEntity";
 import * as SecureStore from "expo-secure-store";
-import { Divider } from "@rneui/themed";
+import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
+import { Text, Divider } from "@rneui/themed";
 
 export function FrontpageTenant(navigation) {
   const token: string | null | undefined = useSelector(
@@ -14,7 +15,13 @@ export function FrontpageTenant(navigation) {
   const error: string | undefined = useSelector(
     (state: RootState) => state.users.error
   );
+
   const dispatch = useDispatch<AppDispatch>();
+  const user = useSelector((state: RootState) => state.users.user);
+
+  useEffect(() => {
+    dispatch(findOne());
+  }, []);
 
   useEffect(() => {
     const asyncFunc = async () => {
@@ -132,10 +139,9 @@ export function FrontpageTenant(navigation) {
     </View>
   );
 }
-
 const styles = StyleSheet.create({
-  input: {
-    height: 40,
+  /* searchInput: {
+    height: 50,
     margin: 12,
     borderWidth: 1,
     padding: 10,
@@ -233,4 +239,5 @@ const styles = StyleSheet.create({
     flexDirection: "row",
     width: "100%",
   },
+  divider: {},
 });
