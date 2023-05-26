@@ -8,7 +8,7 @@ import * as SecureStore from "expo-secure-store";
 import { ScrollView, TouchableOpacity } from "react-native-gesture-handler";
 import { Text, Divider } from "@rneui/themed";
 
-export function FrontpageTenant() {
+export function FrontpageTenant(navigation) {
   const token: string | null | undefined = useSelector(
     (state: RootState) => state.users.token
   );
@@ -18,15 +18,6 @@ export function FrontpageTenant() {
 
   const dispatch = useDispatch<AppDispatch>();
   const user = useSelector((state: RootState) => state.users.user);
-
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
-
-  const handleLoginSuccess = (event: any) => {
-    event.preventDefault();
-
-    dispatch(login(new UsersEntity(username, password)));
-  };
 
   useEffect(() => {
     dispatch(findOne());
@@ -41,27 +32,6 @@ export function FrontpageTenant() {
     };
     asyncFunc();
   }, []);
-
-  /* return (
-    <View>
-      <Text>Login</Text>
-      <TextInput
-        style={styles.input}
-        onChangeText={setUsername}
-        value={username}
-      />
-      <TextInput
-        style={styles.input}
-        onChangeText={setPassword}
-        value={password}
-      />
-      <Button title="Create tenant" onPress={handleLoginSuccess} />
-
-      <Text>token is {token}</Text>
-      <Text>{error}</Text>
-    </View>
-  );
-} */
 
   const text1 = {
     title: "Servicecenter lukker om",
@@ -84,12 +54,12 @@ export function FrontpageTenant() {
         <Image source={require("../../assets/search.png")}></Image>
       </View>
       */}
-        <View style={{ marginLeft: 20 }}>
-          <Text style={styles.title} h4>
-            Resident support
-          </Text>
-        </View>
         <View style={styles.mainContainer}>
+          <View style={{ marginBottom: 10 }}>
+            <Text h4 style={[styles.title, { marginBottom: 5 }]}>
+              Resident support
+            </Text>
+          </View>
           <View style={styles.container}>
             <View>
               <Image
@@ -98,22 +68,26 @@ export function FrontpageTenant() {
               ></Image>
             </View>
             <View style={styles.bubbleText}>
-              <Text>{text1.title}</Text>
+              <Text style={{ fontWeight: "600" }}>{text1.title}</Text>
               <Text style={styles.text}>{text1.time}</Text>
             </View>
           </View>
 
           <View style={styles.container}>
-            <View style={styles.image}>
-              <Image
-                source={require("../../assets/office-service.png")}
-              ></Image>
-            </View>
+            <Image
+              style={styles.image}
+              source={require("../../assets/office-service.png")}
+            ></Image>
             <View style={styles.bubbleText}>
-              <Text>{text2.title}</Text>
+              <Text style={{ fontWeight: "600" }}>{text2.title}</Text>
               <Text style={styles.text}>{text2.time}</Text>
             </View>
           </View>
+          <Divider
+            style={{ marginTop: 25, marginBottom: 25 }}
+            width={1.5}
+            color="#D0D5DD"
+          />
 
           <View style={styles.problems}>
             <View>
@@ -121,30 +95,36 @@ export function FrontpageTenant() {
                 My Problems
               </Text>
             </View>
-            <View>
+            <TouchableOpacity onPress={() => navigation.openDrawer()}>
               <Text style={styles.seeAll}>See all →</Text>
-            </View>
+            </TouchableOpacity>
           </View>
 
           <ScrollView horizontal={true}>
-            <View style={styles.myProblemsContainer}>
+            <View style={[styles.myProblemsContainer, { marginTop: 10 }]}>
               {user &&
                 user.tenant.problem.map((problem: any) => (
                   <View>
                     <View style={styles.problemContainer}>
                       <View>
-                        <Text style={styles.problemContainerTitle} h4>
+                        <Text
+                          style={[
+                            styles.problemContainerTitle,
+                            { color: "white" },
+                          ]}
+                          h4
+                        >
                           {problem.subject}
                         </Text>
-                        <Text style={styles.problemContainerDepartment}>
+                        <Text
+                          style={[
+                            styles.problemContainerDepartment,
+                            { color: "white" },
+                          ]}
+                        >
                           {problem.department}
                         </Text>
                       </View>
-                      <Divider
-                        style={{ marginRight: 10, marginLeft: 10 }}
-                        width={1}
-                        color="#D0D5DD"
-                      />
                       <Image
                         style={styles.problemContainerImage}
                         source={{ uri: `${problem.image}` }}
@@ -174,13 +154,13 @@ const styles = StyleSheet.create({
     flexDirection: "row",
   }, */
   text: {
-    fontSize: 20,
-    marginTop: 10,
-    padding: 10,
+    fontSize: 25,
+    fontWeight: "500",
+    marginTop: -2,
   },
   title: {
     marginTop: 20,
-    fontSize: 20,
+    fontWeight: "500",
   },
   seeAll: {
     marginTop: 25,
@@ -189,7 +169,7 @@ const styles = StyleSheet.create({
   },
   container: {
     flex: 1,
-    marginBottom: 10,
+    marginBottom: 5,
     padding: 20,
     borderRadius: 15,
     backgroundColor: "#D0D5DD",
@@ -217,20 +197,20 @@ const styles = StyleSheet.create({
   },
   bubbleText: {
     flex: 1,
-    marginTop: 5,
   },
   image: {
     flex: 1,
-    margin: 5,
+    padding: 5,
+    marginBottom: 25,
+    width: 40,
+    height: 40,
   },
   problemContainer: {
     width: 250,
     marginRight: 10,
     marginTop: 10,
     borderRadius: 15,
-    backgroundColor: "white",
-    borderWidth: 1,
-    borderColor: "#D0D5DD",
+    backgroundColor: "#101828",
 
     padding: 10,
   },

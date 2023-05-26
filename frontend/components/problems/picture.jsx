@@ -11,6 +11,7 @@ import { useEffect, useRef, useState } from "react";
 import { Camera } from "expo-camera";
 import { shareAsync } from "expo-sharing";
 import * as MediaLibrary from "expo-media-library";
+import { TouchableOpacity } from "react-native-gesture-handler";
 
 export function Picture(props) {
   let cameraRef = useRef();
@@ -123,7 +124,31 @@ export function Picture(props) {
   return (
     <Camera style={styles.container} ref={cameraRef}>
       <View style={styles.buttonContainer}>
-        <Button title="Take Pic" onPress={takePic} />
+        <TouchableOpacity
+          style={{
+            backgroundColor: "#F2F4F7",
+            color: "#1A1B22",
+            paddingTop: 10,
+            paddingBottom: 10,
+            paddingLeft: 15,
+            paddingRight: 15,
+            borderRadius: 5,
+          }}
+          onPress={() => props.setCamera(false)}
+        >
+          <Text style={{ fontSize: 16, fontWeight: "500" }}>Cancel</Text>
+        </TouchableOpacity>
+        <TouchableOpacity
+          style={{
+            backgroundColor: "#A5ED7B",
+            color: "#1A1B22",
+            padding: 10,
+            borderRadius: 5,
+          }}
+          onPress={() => takePic()}
+        >
+          <Text style={{ fontSize: 16, fontWeight: "500" }}>Take Pic</Text>
+        </TouchableOpacity>
       </View>
     </Camera>
   );
@@ -136,8 +161,13 @@ const styles = StyleSheet.create({
     justifyContent: "center",
   },
   buttonContainer: {
-    backgroundColor: "#fff",
-    alignSelf: "flex-end",
+    position: "absolute",
+    bottom: 10,
+    display: "flex",
+    flexDirection: "row",
+    gap: 50,
+    alignSelf: "center",
+    margin: 15,
   },
   preview: {
     alignSelf: "stretch",

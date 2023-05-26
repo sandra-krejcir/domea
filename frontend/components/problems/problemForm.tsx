@@ -105,10 +105,6 @@ export function ProblemsForm({ setProblemDepartment, problemDepartment }) {
     <View
       style={{
         flex: 1,
-        backgroundColor: "white",
-        height: "100%",
-        paddingLeft: 15,
-        paddingRight: 15,
       }}
     >
       {camera ? (
@@ -118,152 +114,168 @@ export function ProblemsForm({ setProblemDepartment, problemDepartment }) {
           photoDisplayURL={photoDisplayURL}
         ></Picture>
       ) : (
-        <ScrollView style={{ marginBottom: 30 }}>
-          <View
-            style={{
-              display: "flex",
-              flexDirection: "row",
-              marginTop: 10,
-            }}
-          >
-            <TouchableOpacity onPress={() => setProblemDepartment("")}>
-              <Image
-                style={{ width: 35, height: 35 }}
-                source={require(`../../assets/back.png`)}
-              />
-            </TouchableOpacity>
-            <Text
-              style={{
-                alignSelf: "center",
-                marginLeft: "auto",
-                marginRight: "auto",
-              }}
-            >
-              {problemDepartment}
-            </Text>
-          </View>
-          <Text h3 style={{ marginLeft: 10, marginTop: 35 }}>
-            Describe your issue
-          </Text>
-          <Text style={{ marginLeft: 10, marginRight: 10, marginTop: 5 }}>
-            Write to your case worker about the issue you're having. Once you
-            have opened the case, it will be sent to the administration and you
-            will be contacted about it as soon as possible.
-          </Text>
-          <TextInput
-            onChangeText={setSubject}
-            value={subject}
-            label="Subject *"
-            mode="outlined"
-            outlineColor="#D0D5DD"
-            outlineStyle={{ borderWidth: 2 }}
-            activeOutlineColor="#A5ED7B"
-            selectionColor="black"
-            textColor="black"
-            style={{
-              backgroundColor: "white",
-              marginLeft: 10,
-              marginRight: 10,
-              marginTop: 15,
-              color: "black",
-            }}
-          />
-          <TextInput
-            onChangeText={setDescription}
-            value={description}
-            label="Description *"
-            mode="outlined"
-            outlineColor="#D0D5DD"
-            outlineStyle={{ borderWidth: 2 }}
-            activeOutlineColor="#A5ED7B"
-            selectionColor="black"
-            textColor="black"
-            style={{
-              backgroundColor: "white",
-              marginLeft: 10,
-              marginRight: 10,
-              marginTop: 15,
-              color: "black",
-            }}
-            multiline
-            maxLength={250}
-          />
-          {photoDisplayURL ? (
-            <TouchableOpacity onPress={() => setCamera(true)}>
-              <Image
-                style={{
-                  marginTop: 25,
-                  width: "95%",
-                  height: 400,
-                  alignSelf: "center",
-                  borderRadius: 5,
-                }}
-                source={{ uri: `${photoDisplayURL}` }}
-              />
-            </TouchableOpacity>
-          ) : (
-            <TouchableOpacity onPress={() => setCamera(true)}>
-              <View
-                style={{
-                  borderColor: "#D0D5DD",
-                  borderRadius: 5,
-                  borderStyle: "solid",
-                  borderWidth: 2,
-                  marginTop: 25,
-                  marginLeft: 10,
-                  marginRight: 10,
-                  height: 200,
-                  justifyContent: "center",
-                  alignItems: "center",
-                }}
-              >
-                <Image
-                  style={{ width: 30, height: 30, marginBottom: 10 }}
-                  source={require(`../../assets/documents.png`)}
-                />
-                <Text style={{ fontWeight: "700" }}>
-                  Click to take a picture
-                </Text>
-              </View>
-            </TouchableOpacity>
-          )}
-          {photoDisplayURL && (
+        <View
+          style={{
+            backgroundColor: "white",
+            height: "100%",
+            paddingLeft: 15,
+            paddingRight: 15,
+          }}
+        >
+          <ScrollView style={{ marginBottom: 30 }}>
             <View
               style={{
                 display: "flex",
                 flexDirection: "row",
-                justifyContent: "space-around",
+                marginTop: 10,
               }}
             >
+              <TouchableOpacity onPress={() => setProblemDepartment("")}>
+                <Image
+                  style={{ width: 35, height: 35 }}
+                  source={require(`../../assets/back.png`)}
+                />
+              </TouchableOpacity>
               <Text
-                style={{ margin: 8 }}
-                onPress={() => setPhotoDisplayURL("")}
+                style={{
+                  alignSelf: "center",
+                  marginLeft: "auto",
+                  marginRight: "auto",
+                }}
               >
-                Delete Image
-              </Text>
-              <Text style={{ margin: 8 }} onPress={() => setCamera(true)}>
-                Retake Picture
+                {problemDepartment}
               </Text>
             </View>
-          )}
-          <TouchableOpacity
-            style={{
-              height: 60,
-              marginLeft: 10,
-              marginRight: 10,
-              borderRadius: 5,
-              backgroundColor: "#101828",
-              marginTop: 25,
-              justifyContent: "center",
-              alignItems: "center",
-            }}
-            onPress={() => setIsVisible(true)}
-          >
-            <Text style={{ color: "white", fontWeight: "700", fontSize: 14 }}>
-              NEXT
+            <Text h3 style={{ marginLeft: 10, marginTop: 35 }}>
+              Describe your issue
             </Text>
-          </TouchableOpacity>
-        </ScrollView>
+            <Text style={{ marginLeft: 10, marginRight: 10, marginTop: 5 }}>
+              Write to your case worker about the issue you're having. Once you
+              have opened the case, it will be sent to the administration and
+              you will be contacted about it as soon as possible.
+            </Text>
+            <TextInput
+              onChangeText={setSubject}
+              value={subject}
+              label="Subject *"
+              mode="outlined"
+              outlineColor="#D0D5DD"
+              outlineStyle={{ borderWidth: 2 }}
+              activeOutlineColor="#A5ED7B"
+              selectionColor="black"
+              textColor="black"
+              style={{
+                backgroundColor: "white",
+                marginLeft: 10,
+                marginRight: 10,
+                marginTop: 15,
+                color: "black",
+              }}
+            />
+            <TextInput
+              onChangeText={setDescription}
+              value={description}
+              label="Description *"
+              mode="outlined"
+              outlineColor="#D0D5DD"
+              outlineStyle={{ borderWidth: 2 }}
+              activeOutlineColor="#A5ED7B"
+              selectionColor="black"
+              textColor="black"
+              style={{
+                backgroundColor: "white",
+                marginLeft: 10,
+                marginRight: 10,
+                marginTop: 15,
+                color: "black",
+              }}
+              multiline
+              maxLength={250}
+            />
+            {photoDisplayURL ? (
+              <TouchableOpacity onPress={() => setCamera(true)}>
+                <Image
+                  style={{
+                    marginTop: 25,
+                    width: "95%",
+                    height: 400,
+                    alignSelf: "center",
+                    borderRadius: 5,
+                  }}
+                  source={{ uri: `${photoDisplayURL}` }}
+                />
+              </TouchableOpacity>
+            ) : (
+              <TouchableOpacity onPress={() => setCamera(true)}>
+                <View
+                  style={{
+                    borderColor: "#D0D5DD",
+                    borderRadius: 5,
+                    borderStyle: "solid",
+                    borderWidth: 2,
+                    marginTop: 25,
+                    marginLeft: 10,
+                    marginRight: 10,
+                    height: 200,
+                    justifyContent: "center",
+                    alignItems: "center",
+                  }}
+                >
+                  <Image
+                    style={{ width: 30, height: 30, marginBottom: 10 }}
+                    source={require(`../../assets/documents.png`)}
+                  />
+                  <Text style={{ fontWeight: "700" }}>
+                    Click to take a picture
+                  </Text>
+                </View>
+              </TouchableOpacity>
+            )}
+            {photoDisplayURL && (
+              <View
+                style={{
+                  display: "flex",
+                  flexDirection: "row",
+                  justifyContent: "space-around",
+                }}
+              >
+                <Text
+                  style={{ margin: 8 }}
+                  onPress={() => setPhotoDisplayURL("")}
+                >
+                  Delete Image
+                </Text>
+                <Text style={{ margin: 8 }} onPress={() => setCamera(true)}>
+                  Retake Picture
+                </Text>
+              </View>
+            )}
+            <TouchableOpacity
+              style={{
+                height: 60,
+                marginLeft: 10,
+                marginRight: 10,
+                borderRadius: 5,
+                backgroundColor:
+                  subject && description && photoDisplayURL
+                    ? "#101828"
+                    : "#F0F0F0",
+                marginTop: 25,
+                justifyContent: "center",
+                alignItems: "center",
+              }}
+              onPress={() => {
+                if (subject && description && photoDisplayURL) {
+                  setIsVisible(true);
+                }
+              }}
+            >
+              <Text style={{ color: "white", fontWeight: "700", fontSize: 14 }}>
+                NEXT
+              </Text>
+            </TouchableOpacity>
+          </ScrollView>
+        </View>
       )}
 
       <BottomSheet
@@ -469,7 +481,7 @@ export function ProblemsForm({ setProblemDepartment, problemDepartment }) {
                     PHONE
                   </Text>
                   <Text style={{ marginTop: 20, marginRight: 20 }}>
-                    {user.username}
+                    {user.tenant.phone}
                   </Text>
                 </View>
               </View>
@@ -480,7 +492,8 @@ export function ProblemsForm({ setProblemDepartment, problemDepartment }) {
 
       <BottomSheet
         onBackdropPress={() => {
-          setIsVisible(false);
+          setError("");
+          setProblemDepartment("");
         }}
         isVisible={error === "Problem creation success"}
       >
@@ -491,7 +504,82 @@ export function ProblemsForm({ setProblemDepartment, problemDepartment }) {
             paddingBottom: 30,
           }}
         >
-          <Text>Hi</Text>
+          <Text
+            style={{
+              margin: 20,
+              color: "#101828",
+              fontSize: 18,
+              fontWeight: "600",
+              alignSelf: "center",
+            }}
+          >
+            Thank you for you inquiry!
+          </Text>
+          <Divider />
+          <Image
+            style={{
+              width: 70,
+              height: 70,
+              marginTop: 70,
+              marginLeft: 70,
+              marginRight: 70,
+              marginBottom: 10,
+              alignSelf: "center",
+            }}
+            source={require("../../assets/confirm.png")}
+          ></Image>
+          <Text
+            h3
+            style={{ color: "#101828", fontWeight: "700", alignSelf: "center" }}
+          >
+            Case Opened
+          </Text>
+          <View
+            style={{
+              backgroundColor: "#F2F4F7",
+              marginLeft: 25,
+              marginRight: 25,
+              marginTop: 35,
+              marginBottom: 70,
+              padding: 15,
+              borderRadius: 5,
+            }}
+          >
+            <Text
+              style={{
+                textAlign: "center",
+              }}
+            >
+              You will be contacted via your e-mail {user.username} or on your
+              phone number {user.tenant.phone} to set up the time and date for
+              the reparation.
+            </Text>
+          </View>
+          <TouchableOpacity
+            style={{
+              backgroundColor: "#101828",
+              marginLeft: 25,
+              marginRight: 25,
+              padding: 15,
+              marginBottom: 40,
+              borderRadius: 5,
+            }}
+            onPress={() => {
+              setError("");
+              setProblemDepartment("");
+            }}
+          >
+            <Text
+              style={{
+                color: "white",
+                fontWeight: "600",
+                fontSize: 16,
+                alignSelf: "center",
+              }}
+            >
+              Back to Categories
+            </Text>
+          </TouchableOpacity>
         </View>
       </BottomSheet>
     </View>

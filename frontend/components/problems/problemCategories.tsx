@@ -158,11 +158,9 @@ export function Categories({ setProblemDepartment }) {
                         style={{
                           marginHorizontal: gap / 2,
                           width: width - gap * 2,
-                          margin: 20,
+                          margin: 15,
                           borderRadius: 17,
-                          borderColor: "#F2F4F7",
-                          borderStyle: "dashed",
-                          backgroundColor: "#F2F4F7",
+                          backgroundColor: "#101828",
                           borderWidth: 2,
                           padding: 20,
                         }}
@@ -170,50 +168,47 @@ export function Categories({ setProblemDepartment }) {
                         <View
                           style={{
                             display: "flex",
-                            flexDirection: "row",
-                            alignItems: "center",
-                            width: "128%",
+                            flexDirection: "row-reverse",
+                            justifyContent: "flex-start",
+                            marginTop: -10,
                           }}
                         >
-                          <View
-                            style={{
-                              display: "flex",
-                              flexDirection: "row",
-                              width: "70%",
-                              alignItems: "center",
-                              marginTop: 5,
-                            }}
-                          >
-                            <Text
-                              h3
-                              style={{
-                                marginBottom: 7,
-                              }}
-                            >
-                              {problem.subject}
-                            </Text>
-                            <Text
-                              style={{
-                                width: "100%",
-                              }}
-                            >
-                              - DEPARTMENT
-                            </Text>
-                          </View>
                           <TouchableOpacity
-                            style={{ width: 50, height: 50 }}
                             onPress={() => {
                               dispatch(deleteProblem(problem.id));
                               dispatch(findOne());
                             }}
                           >
-                            <Text>Delete</Text>
+                            <Image
+                              style={{ width: 30, height: 30 }}
+                              source={require("../../assets/trash.png")}
+                            />
                           </TouchableOpacity>
+                          <Text
+                            h4
+                            style={{
+                              marginRight: 140,
+                              color: "white",
+                            }}
+                          >
+                            {problem.subject}
+                          </Text>
                         </View>
                         <Text
                           style={{
                             width: "100%",
-                            marginBottom: 25,
+                            fontWeight: "600",
+                            color: "white",
+                            marginBottom: 10,
+                          }}
+                        >
+                          {problem.department}
+                        </Text>
+                        <Text
+                          style={{
+                            width: "100%",
+                            marginBottom: 20,
+                            color: "white",
                           }}
                         >
                           {problem.description}
@@ -221,36 +216,20 @@ export function Categories({ setProblemDepartment }) {
                         <Image
                           style={{
                             width: width - gap * 5,
-                            height: width + gap * 5,
+                            height: width + gap * 1.5,
                             alignSelf: "center",
+                            borderRadius: 5,
                           }}
                           source={{ uri: `${problem.image}` }}
                         />
                       </View>
                     ))}
                 </View>
-                {/*  {user.tenant.problem.map((problem: any) => (
-                <>
-                  <Text>{problem.subject}</Text>
-                  <Text>{problem.description}</Text>
-                </>
-              ))} */}
               </View>
             </ScrollView>
           </TabView.Item>
         </TabView>
       </>
-      {/* {user && (
-        <>
-          <Text>{user.tenant.firstname}</Text>
-          {user.tenant.problem.map((problem: any) => (
-            <>
-              <Text>{problem.subject}</Text>
-              <Text>{problem.description}</Text>
-            </>
-          ))}
-        </>
-      )} */}
     </View>
   );
 }
